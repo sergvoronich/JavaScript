@@ -1,17 +1,17 @@
 // Первое задание (TREESUM)
 
-var sum = 0;
-
 function NumbersSumCount(ar) {
+    var sum = 0;
     if (Array.isArray(ar)) {
-        for (var item of ar) {
+        for (item of ar) {
             if (Number.isFinite(item)) {
                 sum += item;
             } else if (Array.isArray(item)) {
-                NumbersSumCount(item);
+                sum += NumbersSumCount(item);
             }
         }
     }
+    return sum;
 }
 
 var test = [5, 7,
@@ -20,15 +20,13 @@ var test = [5, 7,
     1, 8
 ];
 
-NumbersSumCount(test);
-
-console.log(sum);
+console.log(NumbersSumCount(test));
 
 // Второе задание (VOWELS)
 
 var string = prompt("Введите любую строку:");
 
-var VC = function vowelsCount(str) {
+function vowelsCount(str) {
     var vowelsum = 0;
     var rusvowels = ['а', 'о', 'е', 'и', 'э', 'у', 'ы', 'ю', 'я', 'ё',];
     try {
@@ -47,6 +45,4 @@ var VC = function vowelsCount(str) {
     return vowelsum;
 }
 
-console.log(VC(string));
-
-
+console.log(vowelsCount(string));
