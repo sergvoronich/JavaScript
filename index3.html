@@ -14,6 +14,62 @@
 
     <script>
 
+        // Задание №1а
+
+        var string = prompt("Введите любую строку:");
+
+        function vowelsCount(str) {
+            var rusvowels = ['а', 'о', 'е', 'и', 'э', 'у', 'ы', 'ю', 'я', 'ё',];
+            var arr = str.split('');
+            return (arr.filter(n => rusvowels.includes(n))).length;
+        }
+
+        console.log("Количество гласных букв в строке: " + vowelsCount(string));
+
+
+        // Задание №1б
+
+        var string = prompt("Введите любую строку:");
+
+        function vowelsCount2(str) {
+            var vowelsum = 0;
+            var rusvowels = ['а', 'о', 'е', 'и', 'э', 'у', 'ы', 'ю', 'я', 'ё',];
+            var arr = str.split('');
+
+            arr.forEach(n => {
+                if (rusvowels.includes(n)) {
+                    vowelsum += 1;
+                }
+            });
+
+            return vowelsum;
+        }
+
+        console.log("Количество гласных букв в строке: " + vowelsCount2(string));
+
+        // Задание №1в
+
+        var string = prompt("Введите любую строку:");
+
+        function vowelsCount3(str) {
+            var rusvowels = ['а', 'о', 'е', 'и', 'э', 'у', 'ы', 'ю', 'я', 'ё',];
+            var arr = str.split('');
+
+            var vowelsum = arr.reduce(function (a, b) {
+                if (rusvowels.includes(b)) {
+                    b = 1;
+                } else {
+                    b = 0;
+                }
+                return a + b;
+            }, 0);
+            return vowelsum;
+        }
+
+        console.log("Количество гласных букв в строке: " + vowelsCount3(string));
+
+        // Задание №2
+
         "use strict";
 
         // находим корни квадратного уравнения
