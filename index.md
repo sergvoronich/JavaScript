@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+
 <html lang="en">
 
 <head>
@@ -17,23 +17,23 @@
                 <!-- Вариант с функцией и map -->
                 <p>Вариант с функцией и map</p>
                 <p><input type="button" value="Ввод информации о напитке"
-                        onclick="drinkStorage.addValue(a = drinkNameEntry(), b = drinkInfoEntry());"></input></p>
+                        onclick="drinkStorage.addValue(a = drinkNameEntry(), b = drinkInfoEntry());"></p>
                 <p><input type="button" value="Получение информации о напитке"
-                        onclick="getDrinkInfo(prompt('Введите название напитка:'))"></input></p>
+                        onclick="getDrinkInfo(prompt('Введите название напитка:'))"></p>
                 <p><input type="button" value="Удаление информации о напитке" onclick="if(drinkStorage.deleteValue(prompt('Введите название напитка, который хотите удалить:')))
-            { alert('Напиток удален!')} else {alert('Напитка с таким названием не существует!')}"></input></p>
-                <p><input type="button" value="Перечень всех напитков" onclick="alert(drinkStorage.getKeys())"></input>
+            { alert('Напиток удален!')} else {alert('Напитка с таким названием не существует!')}"></p>
+                <p><input type="button" value="Перечень всех напитков" onclick="alert(drinkStorage.getKeys())">
                 </p>
             </div>
             <div class="buttons">
                 <!-- Вариант с классом и объектом -->
                 <p>Вариант с классом и объектом</p>
                 <p><input type="button" value="Ввод информации о напитке"
-                        onclick="drinkStorage2.addValue(a = drinkNameEntry(), b = drinkInfoEntry());"></input></p>
+                        onclick="drinkStorage2.addValue(a = drinkNameEntry(), b = drinkInfoEntry());"></p>
                 <p><input type="button" value="Получение информации о напитке"
-                        onclick="getDrinkInfo2(prompt('Введите название напитка:'))"></input></p>
-                <p><input type="button" value="Удаление информации о напитке" onclick="delDrinkInfo()"></input></p>
-                <p><input type="button" value="Перечень всех напитков" onclick="alert(drinkStorage2.getKeys())"></input>
+                        onclick="getDrinkInfo2(prompt('Введите название напитка:'))"></p>
+                <p><input type="button" value="Удаление информации о напитке" onclick="delDrinkInfo()"></p>
+                <p><input type="button" value="Перечень всех напитков" onclick="alert(drinkStorage2.getKeys())">
                 </p>
             </div>
         </div>
