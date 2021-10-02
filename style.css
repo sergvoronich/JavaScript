@@ -8,9 +8,13 @@ body {
     align-items   : center;
 }
 
+.buttons-container {
+    display: flex;
+}
 
-.button-container {
-    min-width : 1200px;
+
+.buttons {
+    min-width : 400px;
     text-align: center;
 }
 
