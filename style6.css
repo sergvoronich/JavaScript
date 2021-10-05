@@ -1,0 +1,28 @@
+body {
+    margin: 0;
+}
+
+.wrapper {
+    display       : flex;
+    flex-direction: column;
+    min-width     : 1200px;
+    align-items   : center;
+}
+
+td {
+    font-size: 36px;
+}
+
+button {
+    width        : 100px;
+    height       : 100px;
+    border-radius: 50%;
+    margin       : 30px 0 60px;
+    box-shadow   : 0 0 5px rgba(0, 0, 0, 1.0);
+    font-size    : 26px;
+    font-weight  : bold;
+}
+
+button:active {
+    box-shadow: none;
+}
