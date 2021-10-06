@@ -72,7 +72,7 @@
 
             /* Вариант с классом и объектом */
 
-            var drinkStorage2 = new HashStorageFunction2(storage);
+            var drinkStorage2 = new HashStorageFunction2();
 
             var getDrinkInfo2 = function (drink) {
                 this.drink = drink;
