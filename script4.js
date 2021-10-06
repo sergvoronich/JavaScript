@@ -45,18 +45,13 @@ function HashStorageFunction() {
 
 // а потом получилось!
 
-let storage = {};  // не мог поместить никак объект-хранилище внутри класса, пришлось вот так поступить.
-
 class HashStorageFunction2 {
-
-    constructor(storage) {
-        this.storage = storage;
-    }
+    storage = new Object;
 
     addValue = function (key, value) {
         this.key = key;
         this.value = value;
-        storage[key] = value;
+        this.storage[key] = value;
     }
 
     getValue = function (key) {
@@ -64,14 +59,14 @@ class HashStorageFunction2 {
         if (key == "undefined") {
             return false;
         } else {
-            return storage[key];
+            return this.storage[key];
         }
     }
 
     deleteValue = function (key) {
         this.key = key;
-        if (storage[key]) {
-            delete storage[key];
+        if (this.storage[key]) {
+            delete this.storage[key];
             return true;
         } else {
             return false;
@@ -80,12 +75,10 @@ class HashStorageFunction2 {
 
     getKeys = function () {
         var ar = [];
-        for (let item in storage) {
+        for (let item in this.storage) {
             ar.push(item);
         }
         return ar;
     }
 
 }
-
-
