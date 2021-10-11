@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tasks planner</title>
+    <link rel="stylesheet" href="style7.css">
+</head>
+
+<body>
+    <div class="wrapper">
+        <div class="content-container">
+            <div class="form">
+                <form action="#" id="form" class="form__body">
+                    <h1>Планировщик задач</h1>
+                    <div class="form__item">
+                        <label class="form__label" for="task-name">Task name</label>
+                        <input class="form__input" id="task-name" type="text" name="task-name">
+                    </div>
+                    <div class="form__item">
+                        <label class="form__label" for="task-description">Describe your task</label>
+                        <textarea class="form__input" id="task-description" name="task-description"></textarea>
+                    </div>
+                    <div class="form__item">
+                        <div class="form__title">Add importance</div>
+                        <div class="options">
+                            <div class="options_item">
+                                <input type="radio" checked id="normalImp" name="importance" value="normal">
+                                <label for="normalImp" class="options__label">Normal</label>
+                            </div>
+                            <div class="options_item">
+                                <input type="radio" id="middleImp" name="importance" value="middle">
+                                <label for="middleImp" class="options__label">Middle</label>
+                            </div>
+                            <div class="options_item">
+                                <input type="radio" id="highImp" name="importance" value="high">
+                                <label for="highImp" class="options__label">High</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form__item">
+                        <button class="form__button" type="button" onclick="addTask()">ADD TASK TO BOARD</button>
+                    </div>
+                </form>
+            </div>
+            <div class="tasks" id="tasks">
+                <div class="task first" id="task">
+                    <h2 id="task-name">Task Name</h2>
+                    <p id="task-descr">task description</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="script7.js"></script>
+</body>
+
+</html>
