@@ -1,0 +1,59 @@
+.content-container {
+    width: 700px;
+}
+
+.block {
+    display : flex;
+    position: relative;
+}
+
+.group-1 {
+    width: 300px;
+}
+
+.group-2 {
+    width: 400px;
+}
+
+.header {
+    margin-bottom: 10px;
+}
+
+.form_body {
+    display       : flex;
+    flex-direction: column;
+}
+
+.title {
+    display  : inline-block;
+    min-width: 150px;
+}
+
+.block-description {
+    display: block;
+}
+
+p {
+    margin: 0;
+}
+
+.form__input {
+    width        : 80%;
+    border-radius: 5px;
+    border       : 1px solid black;
+    margin-bottom: 5px;
+}
+
+
+#input11 {
+    width : 99%;
+    resize: vertical;
+}
+
+
+.warning {
+    position : absolute;
+    width    : 300px;
+    font-size: 10px;
+    left     : 720px;
+}

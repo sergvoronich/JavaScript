@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style8.css">
+    <title>Document</title>
+</head>
+
+<body>
+    <div class="content-container">
+        <p class="header">Для внесения вашего сайта в каталог заполните форму:</p>
+        <form action="#" method="POST" id="form" class="form_body">
+            <div class="block">
+                <label class="title" for="input1">Разработчики:</label>
+                <input id="input1" class="form__input" type="text" name="developers">
+            </div>
+            <div class="block">
+                <label class="title" for="input2">Название сайта:</label>
+                <input id="input2" class="form__input" type="text" name="name">
+            </div>
+            <div class="block">
+                <label class="title" for="input3">URL сайта:</label>
+                <input id="input3" class="form__input" type="url" name="web">
+            </div>
+            <div class="block group-1">
+                <label class="title" for="input4">Дата запуска сайта:</label>
+                <input id="input4" class="form__input" type="date" name="date">
+            </div>
+            <div class="block group-1">
+                <label class="title" for="input5">Посетителей в сутки:</label>
+                <input id="input5" class="form__input" type="number" name="visitors">
+            </div>
+            <div class="block group-2">
+                <label class="title" for="input6">E-mail для связи:</label>
+                <input id="input6" class="form__input" type="email" name="email">
+            </div>
+            <div class="block group-2">
+                <p class="title">Рубрика каталога:</p>
+                <select name="catalog" class="form__input" id="selection">
+                    <option value="health">здоровье</option>
+                    <option value="home">домашний уют</option>
+                    <option value="appliances" selected>бытовая техника</option>
+                </select>
+            </div>
+            <div class="block" id="radios">
+                <p class="title">Размещение:</p>
+                <input id="input7" type="radio" name="accomodation">
+                <label for="input7">бесплатное</label>
+                <input id="input8" type="radio" name="accomodation">
+                <label for="input8">платное</label>
+                <input id="input9" type="radio" name="accomodation">
+                <label for="input9">VIP</label>
+            </div>
+            <div class="block">
+                <label class="title" for="input10">Разрешить отзывы:</label>
+                <input id="input10" type="checkbox" name="feedback">
+            </div>
+            <div class="block-description">
+                <label for="input11">Описание сайта:</label>
+                <textarea id="input11" class="form__input" name="description"></textarea>
+            </div>
+            <div class="block">
+                <button class="button" type="submit">Опубликовать</button>
+            </div>
+        </form>
+    </div>
+    <script src="script8.js"></script>
+</body>
+
+</html>
