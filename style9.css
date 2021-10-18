@@ -1,0 +1,12 @@
+img {
+    width: 200px;
+}
+
+div {
+    width: 250px;
+}
+
+#container {
+    display: flex;
+    width  : 1000px;
+}
