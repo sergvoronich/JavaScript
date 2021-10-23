@@ -251,3 +251,13 @@ fillField(ship3);
 fillField(ship4);
 
 console.log(field);
+
+for (let i = 0; i < field.length; i++) {
+    for (let j = 0; j < field[0].length; j++) {
+        if (field[i][j] === 1) {
+            const id = `${i}` + `${j}`;
+            const elem = document.getElementById(`${id}`);
+            elem.style.backgroundColor = "blue";
+        }
+    }
+}
