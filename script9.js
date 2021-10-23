@@ -2,15 +2,14 @@ const container = document.getElementById("container");
 
 container.addEventListener('mousedown', move, true);
 
-
+let counter = 1;
 
 function move(event) {
     const image = event.target;
     const shiftY = event.pageY - image.getBoundingClientRect().top;
     const shiftX = event.pageX - image.getBoundingClientRect().left;
-    let zindex = image.getAttribute("z-index");
     image.style.position = 'absolute';
-    image.style.zIndex = 1000;
+    image.style.zIndex = counter;
     image.style.left = event.pageX - shiftX + "px";
     image.style.top = event.pageY - shiftY + "px";
 
@@ -29,11 +28,7 @@ function move(event) {
 
     document.onmouseup = (event) => {
         document.onmousemove = null;
-        if (zindex) {
-            image.style.zIndex = zindex;
-        } else {
-            image.style.zIndex = null;
-        }
+        counter++;
     }
 
 
