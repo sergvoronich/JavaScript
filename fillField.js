@@ -239,25 +239,51 @@ function fillField(ship) {
             counter++;
         }
     }
-
-
-
 }
 
+const autoFillButton = document.getElementById("autoFillButton");
+autoFillButton.addEventListener('click', autofill);
 
-fillField(ship1);
-fillField(ship2);
-fillField(ship3);
-fillField(ship4);
+function autofill() {
 
-console.log(field);
+    const table = document.getElementsByTagName("td");
+    for (let i = 0; i < table.length; i++) {
+        table[i].style.backgroundColor = "#ccc";
+    };
 
-for (let i = 0; i < field.length; i++) {
-    for (let j = 0; j < field[0].length; j++) {
-        if (field[i][j] === 1) {
-            const id = `${i}` + `${j}`;
-            const elem = document.getElementById(`${id}`);
-            elem.style.backgroundColor = "blue";
+
+
+
+    field = [
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+    ];
+
+
+    fillField(ship1);
+    fillField(ship2);
+    fillField(ship3);
+    fillField(ship4);
+
+    console.log(field);
+
+
+    for (let i = 0; i < field.length; i++) {
+        for (let j = 0; j < field[0].length; j++) {
+            if (field[i][j] === 1) {
+                const id = `${i}` + `${j}`;
+                const elem = document.getElementById(`${id}`);
+                elem.style.backgroundColor = "blue";
+            }
         }
     }
+
 }
