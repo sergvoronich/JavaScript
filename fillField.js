@@ -75,27 +75,28 @@ let ship4user = {
 
 function checkVertPath(x, y, ship, field) {
     let errors = 0;
+    console.log(field.length);
     if ((y + ship.length) < field.length && field[y][x] != 1) {
         for (let i = 0; i < ship.length; i++) {
             if (y === 0) {
                 if (x === 0) {
                     // проверки верхнего левого угла
-                    if (field[y + i + 1][x] === 0 && field[y + i + 1][x + 1] === 0 && field[y + i][x + 1] === 0) {
+                    if (field[y + i + 1][x] != 1 && field[y + i + 1][x + 1] != 1 && field[y + i][x + 1] != 1) {
                         errors += 0;
                     } else {
                         errors += 1;
                     }
                 } else if (x === 9) {
                     // проверки верхнего правого угла
-                    if (field[y + i + 1][x] === 0 && field[y + i + 1][x - 1] === 0 && field[y + i][x - 1] === 0) {
+                    if (field[y + i + 1][x] != 1 && field[y + i + 1][x - 1] != 1 && field[y + i][x - 1] != 1) {
                         errors += 0;
                     } else {
                         errors += 1;
                     }
                 } else {
                     // проверки остальных крайних полей по линии у=0
-                    if (field[y + i][x - 1] === 0 && field[y + i + 1][x - 1] === 0
-                        && field[y + i + 1][x] === 0 && field[y + i][x + 1] === 0 && field[y + i + 1][x + 1] === 0) {
+                    if (field[y + i][x - 1] != 1 && field[y + i + 1][x - 1] != 1
+                        && field[y + i + 1][x] != 1 && field[y + i][x + 1] != 1 && field[y + i + 1][x + 1] != 1) {
                         errors += 0;
                     } else {
                         errors += 1;
@@ -104,22 +105,22 @@ function checkVertPath(x, y, ship, field) {
             } else if (y === 9) {
                 if (x === 0) {
                     // проверки нижнего левого угла
-                    if (field[y + i - 1][x] === 0 && field[y + i - 1][x + 1] === 0 && field[y + i][x + 1] === 0) {
+                    if (field[y + i - 1][x] != 1 && field[y + i - 1][x + 1] != 1 && field[y + i][x + 1] != 1) {
                         errors += 0;
                     } else {
                         errors += 1;
                     }
                 } else if (x === 9) {
                     // проверки нижнего правого угла
-                    if (field[y + i - 1][x - 1] === 0 && field[y + i][x - 1] === 0 && field[y + i - 1][x] === 0) {
+                    if (field[y + i - 1][x - 1] != 1 && field[y + i][x - 1] != 1 && field[y + i - 1][x] != 1) {
                         errors += 0;
                     } else {
                         errors += 1;
                     }
                 } else {
                     // проверки остальных крайних полей по линии у=10
-                    if (field[y + i - 1][x - 1] === 0 && field[y + i][x - 1] === 0
-                        && field[y + i - 1][x] === 0 && field[y + i - 1][x + 1] === 0 && field[y + i][x + 1] === 0) {
+                    if (field[y + i - 1][x - 1] != 1 && field[y + i][x - 1] != 1
+                        && field[y + i - 1][x] != 1 && field[y + i - 1][x + 1] != 1 && field[y + i][x + 1] != 1) {
                         errors += 0;
                     } else {
                         errors += 1;
@@ -127,24 +128,24 @@ function checkVertPath(x, y, ship, field) {
                 }
             } else if (x === 0) {
                 // проверки крайних полей по линии х=0
-                if (field[y + i - 1][x] === 0 && field[y + i + 1][x] === 0
-                    && field[y + i - 1][x + 1] === 0 && field[y + i][x + 1] === 0 && field[y + i + 1][x + 1] === 0) {
+                if (field[y + i - 1][x] != 1 && field[y + i + 1][x] != 1
+                    && field[y + i - 1][x + 1] != 1 && field[y + i][x + 1] != 1 && field[y + i + 1][x + 1] != 1) {
                     errors += 0;
                 } else {
                     errors += 1;
                 }
             } else if (x === 9) {
                 // проверки крайних полей по линии х=10
-                if (field[y + i - 1][x - 1] === 0 && field[y + i][x - 1] === 0 && field[y + i + 1][x - 1] === 0
-                    && field[y + i - 1][x] === 0 && field[y + i + 1][x] === 0) {
+                if (field[y + i - 1][x - 1] != 1 && field[y + i][x - 1] != 1 && field[y + i + 1][x - 1] != 1
+                    && field[y + i - 1][x] != 1 && field[y + i + 1][x] != 1) {
                     errors += 0;
                 } else {
                     errors += 1;
                 }
             } else {
-                if (field[y + i - 1][x - 1] === 0 && field[y + i][x - 1] === 0 && (field[y + i + 1][x - 1] === 0) &&
-                    field[y + i - 1][x] === 0 && field[y + i + 1][x] === 0
-                    && field[y + i - 1][x + 1] === 0 && field[y + i][x + 1] === 0 && field[y + i + 1][x + 1] === 0) {
+                if (field[y + i - 1][x - 1] != 1 && field[y + i][x - 1] != 1 && (field[y + i + 1][x - 1] != 1) &&
+                    field[y + i - 1][x] != 1 && field[y + i + 1][x] != 1
+                    && field[y + i - 1][x + 1] != 1 && field[y + i][x + 1] != 1 && field[y + i + 1][x + 1] != 1) {
                     errors += 0;
                 } else {
                     errors += 1;
@@ -153,7 +154,7 @@ function checkVertPath(x, y, ship, field) {
         }
 
     } else {
-        errors = + 1;
+        errors += 1;
     }
 
     if (errors === 0) {
@@ -166,27 +167,27 @@ function checkVertPath(x, y, ship, field) {
 
 function checkHorPath(x, y, ship, field) {
     let errors = 0;
-    if ((x + ship.length) < field[0].length && field[y][x] != 1) {
+    if ((x + ship.length) <= field[0].length && field[y][x] != 1) {
         for (let i = 0; i < ship.length; i++) {
             if (y === 0) {
                 if (x === 0) {
                     // проверки верхнего левого угла
-                    if (field[y + 1][x + i] === 0 && field[y + 1][x + i + 1] === 0 && field[y][x + i + 1] === 0) {
+                    if (field[y + 1][x + i] != 1 && field[y + 1][x + i + 1] != 1 && field[y][x + i + 1] != 1) {
                         errors += 0;
                     } else {
                         errors += 1;
                     }
                 } else if (x === 9) {
                     // проверки верхнего правого угла
-                    if (field[y + 1][x + i] === 0 && field[y + 1][x + i - 1] === 0 && field[y][x + i - 1] === 0) {
+                    if (field[y + 1][x + i] != 1 && field[y + 1][x + i - 1] != 1 && field[y][x + i - 1] != 1) {
                         errors += 0;
                     } else {
                         errors += 1;
                     }
                 } else {
                     // проверки остальных крайних полей по линии у=0
-                    if (field[y][x + i - 1] === 0 && field[y + 1][x + i - 1] === 0
-                        && field[y + 1][x + i] === 0 && field[y][x + i + 1] === 0 && field[y + 1][x + i + 1] === 0) {
+                    if (field[y][x + i - 1] != 1 && field[y + 1][x + i - 1] != 1
+                        && field[y + 1][x + i] != 1 && field[y][x + i + 1] != 1 && field[y + 1][x + i + 1] != 1) {
                         errors += 0;
                     } else {
                         errors += 1;
@@ -195,22 +196,22 @@ function checkHorPath(x, y, ship, field) {
             } else if (y === 9) {
                 if (x === 0) {
                     // проверки нижнего левого угла
-                    if (field[y - 1][x + i] === 0 && field[y - 1][x + i + 1] === 0 && field[y][x + i + 1] === 0) {
+                    if (field[y - 1][x + i] != 1 && field[y - 1][x + i + 1] != 1 && field[y][x + i + 1] != 1) {
                         errors += 0;
                     } else {
                         errors += 1;
                     }
                 } else if (x === 9) {
                     // проверки нижнего правого угла
-                    if (field[y - 1][x + i - 1] === 0 && field[y][x + i - 1] === 0 && field[y - 1][x + i] === 0) {
+                    if (field[y - 1][x + i - 1] != 1 && field[y][x + i - 1] != 1 && field[y - 1][x + i] != 1) {
                         errors += 0;
                     } else {
                         errors += 1;
                     }
                 } else {
                     // проверки остальных крайних полей по линии у=10
-                    if (field[y - 1][x + i - 1] === 0 && field[y][x + i - 1] === 0
-                        && field[y - 1][x + i] === 0 && field[y - 1][x + i + 1] === 0 && field[y][x + i + 1] === 0) {
+                    if (field[y - 1][x + i - 1] != 1 && field[y][x + i - 1] != 1
+                        && field[y - 1][x + i] != 1 && field[y - 1][x + i + 1] != 1 && field[y][x + i + 1] != 1) {
                         errors += 0;
                     } else {
                         errors += 1;
@@ -218,26 +219,26 @@ function checkHorPath(x, y, ship, field) {
                 }
             } else if (x === 0) {
                 // проверки крайних полей по линии х=0
-                if (field[y - 1][x + i] === 0 && (field[y + 1][x + i] === 0)
-                    && field[y - 1][x + i + 1] === 0 && field[y][x + i + 1] === 0 && field[y + 1][x + i + 1] === 0) {
+                if (field[y - 1][x + i] != 1 && (field[y + 1][x + i] != 1)
+                    && field[y - 1][x + i + 1] != 1 && field[y][x + i + 1] != 1 && field[y + 1][x + i + 1] != 1) {
                     errors += 0;
                 } else {
                     errors += 1;
                 }
             } else if (x === 9) {
                 // проверки крайних полей по линии х=10
-                if (field[y - 1][x + i - 1] === 0 && field[y][x + i - 1] === 0 && field[y + 1][x + i - 1] === 0
-                    && field[y - 1][x + i] === 0 && field[y + 1][x + i] === 0) {
+                if (field[y - 1][x + i - 1] != 1 && field[y][x + i - 1] != 1 && field[y + 1][x + i - 1] != 1
+                    && field[y - 1][x + i] != 1 && field[y + 1][x + i] != 1) {
                     errors += 0;
                 } else {
                     errors += 1;
                 }
             } else {
                 // проверки всех остальных полей
-                if ((field[y - 1][x + i - 1] === 0) && (field[y][x + i - 1] === 0) &&
-                    (field[y + 1][x - 1 + i] === 0)
-                    && (field[y - 1][x + i] === 0) && (field[y + 1][x + i] === 0)
-                    && (field[y - 1][x + i + 1] === 0) && (field[y][x + i + 1] === 0) && (field[y + 1][x + i + 1] === 0)) {
+                if ((field[y - 1][x + i - 1] != 1) && (field[y][x + i - 1] != 1) &&
+                    (field[y + 1][x - 1 + i] != 1)
+                    && (field[y - 1][x + i] != 1) && (field[y + 1][x + i] != 1)
+                    && (field[y - 1][x + i + 1] != 1) && (field[y][x + i + 1] != 1) && (field[y + 1][x + i + 1] != 1)) {
                     errors += 0;
                 } else {
                     errors += 1;
@@ -246,7 +247,7 @@ function checkHorPath(x, y, ship, field) {
         }
 
     } else {
-        errors = + 1;
+        errors += 1;
     }
 
     if (errors === 0) {
@@ -326,7 +327,7 @@ function autofill() {
 }
 
 let fieldDisplay2 = document.querySelector(".field2");
-ship1user.display = document.querySelector(".ship1-table");
+ship1user.display = document.querySelector(".ship1-table.active");
 ship2user.display = document.querySelector(".ship2-table");
 ship3user.display = document.querySelector(".ship3-table");
 ship4user.display = document.querySelector(".ship4-table");
@@ -340,13 +341,37 @@ ship3user.display.addEventListener('mousedown', mouseDown);
 ship4user.display.addEventListener('dragstart', dragStart);
 ship4user.display.addEventListener('mousedown', mouseDown);
 
+console.log(ship1user.display);
+console.log(ship1user);
 
 let currentShip = {};
 let dragPoint = null;
 let shiplength = 0;
 
+ship1user.display.addEventListener('contextmenu', horVertChange);
+ship2user.display.addEventListener('contextmenu', horVertChange);
+ship3user.display.addEventListener('contextmenu', horVertChange);
+
 function mouseDown(e) {
     dragPoint = e.target;
+}
+
+function horVertChange(e) {
+    e.preventDefault();
+    let active = document.querySelector(".ship1-table.active");
+    let inactive = document.querySelector(".ship1-table.inactive");
+    active.classList.toggle("active");
+    active.classList.toggle("inactive");
+    inactive.classList.toggle("inactive");
+    inactive.classList.toggle("active");
+    ship1user.display = document.querySelector(".ship1-table.active");
+    console.log(ship1user.display);
+    console.log(ship1user);
+    ship1user.display.addEventListener('dragstart', dragStart);
+    ship1user.display.addEventListener('mousedown', mouseDown);
+    ship1user.display.addEventListener('contextmenu', horVertChange);
+    ship2user.display.addEventListener('contextmenu', horVertChange);
+    ship3user.display.addEventListener('contextmenu', horVertChange);
 }
 
 function dragStart(e) {
@@ -362,19 +387,20 @@ function dragStart(e) {
     }
 }
 
+
 fieldDisplay2.addEventListener('dragover', dragover);
 fieldDisplay2.addEventListener('dragleave', dragleave);
 fieldDisplay2.addEventListener('drop', drop);
 
 function dragover(e) {
     e.preventDefault();
-    if (e.target.tagName == "TD") {
-        if (dragPoint.classList.contains("part01")) {
+    //if (e.target.tagName == "TD") {
+    //  if (dragPoint.classList.contains("part01")) {
 
-        }
+    //}
 
-        // e.target.style.backgroundColor = "blue";
-    }
+    // e.target.style.backgroundColor = "blue";
+    //}
 }
 
 function dragleave(e) {
@@ -386,48 +412,57 @@ function dragleave(e) {
 function drop(e) {
     if (e.target.tagName == "TD" && currentShip.quantity > 0) {
         let indexes = e.target.getAttribute("id").split('');
-        const y = parseInt(indexes[0]);
-        const x = parseInt(indexes[1]);
-        if (checkHorPath(x, y, currentShip, field2)) {
+        let y = parseInt(indexes[0]);
+        let x = parseInt(indexes[1]);
+        if (dragPoint.closest("#ship1-hor")) {
             // e.target.style.backgroundColor = "#ccc";
-            if (dragPoint.classList.contains("part01")) {
+            if (dragPoint.classList.contains("part02")) {
+                x -= 1;
+                // field2[y][x - 1] = 1;
+            } else if (dragPoint.classList.contains("part03")) {
+                x -= 2;
+            } else if (dragPoint.classList.contains("part04")) {
+                x -= 3;
+            }
+            if (checkHorPath(x, y, currentShip, field2)) {
                 for (let i = 0; i < shiplength; i++) {
                     field2[y][x + i] = 1;
                 }
-            } else if (dragPoint.classList.contains("part02")) {
-                field2[y][x - 1] = 1;
-                for (let i = 0; i < shiplength - 1; i++) {
-                    field2[y][x + i] = 1;
-                }
+                currentShip.quantity--;
+            }
+        } else {
+            if (dragPoint.classList.contains("part02")) {
+                y -= 1;
+                // field2[y][x - 1] = 1;
             } else if (dragPoint.classList.contains("part03")) {
-                field2[y][x - 2] = 1;
-                field2[y][x - 1] = 1;
-                for (let i = 0; i < shiplength - 2; i++) {
-                    field2[y][x + i] = 1;
-                }
+                y -= 2;
             } else if (dragPoint.classList.contains("part04")) {
-                for (let i = shiplength - 1; i >= 0; i--) {
-                    field2[y][x - i] = 1;
-                }
+                y -= 3;
             }
-            currentShip.quantity--;
-            console.log(currentShip.quantity);
-        }
-    }
 
-    console.log(field2);
-
-
-    for (let i = 0; i < field2.length; i++) {
-        for (let j = 0; j < field2[0].length; j++) {
-            if (field2[i][j] === 1) {
-                const id = `${i}` + `${j}`;
-                const elem = document.getElementById(`${id}`);
-                if (elem.style.backgroundColor != "blue") {
-                    elem.style.backgroundColor = "blue";
+            if (checkVertPath(x, y, currentShip, field2)) {
+                // e.target.style.backgroundColor = "#ccc";
+                for (let i = 0; i < shiplength; i++) {
+                    field2[y + i][x] = 1;
                 }
+                currentShip.quantity--;
             }
         }
-    }
 
+        console.log(field2);
+
+
+        for (let i = 0; i < field2.length; i++) {
+            for (let j = 0; j < field2[0].length; j++) {
+                if (field2[i][j] === 1) {
+                    const id = `${i}` + `${j}`;
+                    const elem = document.getElementById(`${id}`);
+                    if (elem.style.backgroundColor != "blue") {
+                        elem.style.backgroundColor = "blue";
+                    }
+                }
+            }
+        }
+
+    }
 }

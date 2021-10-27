@@ -20,3 +20,7 @@ td {
 #autoFillButton {
     margin-top: 30px;
 }
+
+.inactive {
+    display: none;
+}
