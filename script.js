@@ -183,7 +183,7 @@ function updateTime() {
 
 // функция для запуска ежесекундного генерирования события
 function startTimeUpdate() {
-    setInterval(updateTime, 1000);
+    let timer = setInterval(updateTime, 1000);
 }
 
 const button = document.querySelector(".button");
