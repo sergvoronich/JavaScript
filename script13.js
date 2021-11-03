@@ -31,6 +31,7 @@ button.addEventListener('click', startMove);
 button2.addEventListener('click', stopMove);
 
 function startMove() {
+    cancelAnimationFrame(timer);
     timer = requestAnimationFrame(moveDot);
 }
 
