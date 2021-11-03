@@ -1,0 +1,55 @@
+.clock-container {
+    display: flex;
+    margin : 30px auto;
+}
+
+.clock {
+    position        : relative;
+    background-color: orange;
+    border-radius   : 50%;
+    margin          : auto;
+}
+
+.hour-circle {
+    position        : absolute;
+    background-color: green;
+    border-radius   : 50%;
+    text-align      : center;
+    font-weight     : bold;
+}
+
+.hour-arrow {
+    position        : absolute;
+    height          : 50px;
+    width           : 7px;
+    background-color: #333;
+    border-radius   : 3px;
+}
+
+.minute-arrow {
+    position        : absolute;
+    background-color: #333;
+    border-radius   : 3px;
+}
+
+.second-arrow {
+    position        : absolute;
+    background-color: #333;
+    border-radius   : 3px;
+}
+
+.digital-clock {
+    position   : absolute;
+    font-weight: bold;
+    font-size  : large;
+}
+
+.button {
+    display: block;
+    margin : 20px auto;
+}
+
+input {
+    display: block;
+    margin : 20px auto;
+}
