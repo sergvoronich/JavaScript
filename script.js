@@ -1,7 +1,10 @@
 
 function createClock() {
     // создание часов
-    const diameter = document.getElementById('diameter').value;
+    let diameter = document.getElementById('diameter').value;
+    if (diameter < 200 || diameter > 800) {
+        diameter = 200;
+    }
     const button = document.querySelector(".button");
     button.insertAdjacentHTML("afterend", '<div class="clock-container"><div class="clock"></div></div>');
     const clock = document.querySelector('.clock');
