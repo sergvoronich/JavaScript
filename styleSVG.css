@@ -1,0 +1,28 @@
+.digital-clock {
+    position   : absolute;
+    font-weight: bold;
+    font-size  : large;
+}
+
+.button {
+    display: block;
+    margin : 20px auto;
+}
+
+input {
+    display: block;
+    margin : 5px auto 20px;
+}
+
+label {
+    display   : block;
+    text-align: center;
+}
+
+svg {
+    margin: 20px;
+}
+
+#hour-circle-number {
+    font-weight: bold;
+}
