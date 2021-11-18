@@ -30,52 +30,75 @@ let field2 = [
 
 let ship1comp = {
     length: 4,
-    quantity: 1
+    quantity: 1,
+    items: [[]],
+    shot: [0],
+    image: "/ships_images/Battleship/ShipBattleshipHull.png"
 };
 
 let ship2comp = {
     length: 3,
-    quantity: 2
+    quantity: 2,
+    items: [[], []],
+    shot: [0, 0],
+    image: "/ships_images/Cruiser/ShipCruiserHull.png"
 };
 
 let ship3comp = {
     length: 2,
-    quantity: 3
+    quantity: 3,
+    items: [[], [], []],
+    shot: [0, 0, 0],
+    image: "/ships_images/Destroyer/ShipDestroyerHull.png"
 };
 
 let ship4comp = {
     length: 1,
-    quantity: 4
+    quantity: 4,
+    items: [[], [], [], []],
+    shot: [0, 0, 0, 0],
+    image: "/ships_images/Plane/PlaneF-35Lightning2.png"
 };
 
 let ship1user = {
     length: 4,
     quantity: 1,
-    display: null
+    display: null,
+    items: [[]],
+    shot: [0],
+    image: "/ships_images/Battleship/ShipBattleshipHull.png"
 };
 
 let ship2user = {
     length: 3,
     quantity: 2,
-    display: null
+    display: null,
+    items: [[], []],
+    shot: [0, 0],
+    image: "/ships_images/Cruiser/ShipCruiserHull.png"
 };
 
 let ship3user = {
     length: 2,
     quantity: 3,
-    display: null
+    display: null,
+    items: [[], [], []],
+    shot: [0, 0, 0],
+    image: "/ships_images/Destroyer/ShipDestroyerHull.png"
 };
 
 let ship4user = {
     length: 1,
     quantity: 4,
-    display: null
+    display: null,
+    items: [[], [], [], []],
+    shot: [0, 0, 0, 0],
+    image: "/ships_images/Plane/PlaneF-35Lightning2.png"
 };
 
 
 function checkVertPath(x, y, ship, field) {
     let errors = 0;
-    console.log(field.length);
     if ((y + ship.length) < field.length && field[y][x] != 1) {
         for (let i = 0; i < ship.length; i++) {
             if (y === 0) {
@@ -260,60 +283,114 @@ function checkHorPath(x, y, ship, field) {
 
 
 
-function fillField(ship) {
+function fillField(ship, player) {
+    let field;
+    if (player == 'comp') {
+        field = field1;
+    } else if (player == 'user') {
+        field = field2;
+    }
     let counter = 0;
+    let quantity = ship.quantity;
     for (let i = 0; i < ship.quantity + counter; i++) {
         let x = Math.floor(Math.random() * 10);
         let y = Math.floor(Math.random() * 10);
-        if (checkHorPath(x, y, ship, field1)) {
-            for (let i = 0; i < ship.length; i++) {
-                field1[y][x + i] = 1;
+        if (checkHorPath(x, y, ship, field)) {
+            quantity--;
+            if (player == 'user') {
+                const id = `${y}` + `${x}`;
+                const elem = document.getElementById(`${id}`);
+                const img = document.createElement('img');
+                img.src = ship.image;
+                img.style.position = "absolute";
+                img.style.top = `${y * 54 + 10 - y}px`;
+                img.style.left = `${x * 55 - x}px`;
+                elem.appendChild(img);
             }
-        } else if (checkVertPath(x, y, ship, field1)) {
+
             for (let i = 0; i < ship.length; i++) {
-                field1[y + i][x] = 1;
+                field[y][x + i] = 1;
+                ship.items[quantity].push([y, x + i]);
+            }
+        } else if (checkVertPath(x, y, ship, field)) {
+            quantity--;
+            if (player == 'user') {
+                const id = `${y}` + `${x}`;
+                const elem = document.getElementById(`${id}`);
+                const img = document.createElement('img');
+                img.src = ship.image;
+                img.style.position = "absolute";
+                img.style.top = `${y * 53}px`;
+                img.style.left = `${x * 55 + 25 - x}px`;
+                img.style.transform = "rotate(90deg)";
+                img.style.transformOrigin = "0% 50%";
+                elem.appendChild(img);
+            }
+            for (let i = 0; i < ship.length; i++) {
+                field[y + i][x] = 1;
+                ship.items[quantity].push([y + i, x]);
             }
         } else {
             counter++;
         }
     }
+    ship.quantity = quantity;
 }
 
 const autoFillButton = document.getElementById("autoFillButton");
+const autoFillButton2 = document.getElementById("autoFillButton2");
 autoFillButton.addEventListener('click', autofill);
+autoFillButton2.addEventListener('click', autofill);
 
-function autofill() {
-    const temp = document.querySelector('.field1');
+function autofill(e) {
+    let temp = 0;
+    if (e.target == autoFillButton) {
+        temp = document.querySelector('.field1');
+
+        field1 = [
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+        ];
+
+        fillField(ship1comp, 'comp');
+        fillField(ship2comp, 'comp');
+        fillField(ship3comp, 'comp');
+        fillField(ship4comp, 'comp');
+
+        autoFillButton.classList.add("inactive");
+
+    } else if (e.target == autoFillButton2) {
+        temp = document.querySelector('.field2');
+
+
+        fillField(ship1user, 'user');
+        fillField(ship2user, 'user');
+        fillField(ship3user, 'user');
+        fillField(ship4user, 'user');
+
+        autoFillButton2.classList.add("inactive");
+
+    }
+
     const table = temp.getElementsByTagName("td");
     for (let i = 0; i < table.length; i++) {
-        table[i].style.backgroundColor = "#ccc";
+        table[i].style.backgroundColor = "rgb(116, 183, 238)";
     };
-
-
-
-
-    field1 = [
-        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-    ];
-
-
-    fillField(ship1comp);
-    fillField(ship2comp);
-    fillField(ship3comp);
-    fillField(ship4comp);
 
     console.log(field1);
 
+    const shipsfilled = new Event('shipsfilled');
+    document.dispatchEvent(shipsfilled);
 
+    /*
     for (let i = 0; i < field1.length; i++) {
         for (let j = 0; j < field1[0].length; j++) {
             if (field1[i][j] === 1) {
@@ -323,6 +400,22 @@ function autofill() {
             }
         }
     }
+
+    
+
+    // окрашивание кораблей на поле
+
+    for (let i = 0; i < field2.length; i++) {
+        for (let j = 0; j < field2[0].length; j++) {
+            if (field2[i][j] === 1) {
+                const id = `${i}` + `${j}`;
+                const elem = document.getElementById(`${id}`);
+                elem.style.backgroundColor = "yellow";
+                elem.style.border = "2px solid black";
+            }
+        }
+    }
+    */
 
 }
 
@@ -340,9 +433,6 @@ ship3user.display.addEventListener('dragstart', dragStart);
 ship3user.display.addEventListener('mousedown', mouseDown);
 ship4user.display.addEventListener('dragstart', dragStart);
 ship4user.display.addEventListener('mousedown', mouseDown);
-
-console.log(ship1user.display);
-console.log(ship1user);
 
 let currentShip = {};
 let dragPoint = null;
@@ -410,6 +500,7 @@ function dragleave(e) {
 }
 
 function drop(e) {
+    console.log(currentShip);
     if (e.target.tagName == "TD" && currentShip.quantity > 0) {
         let indexes = e.target.getAttribute("id").split('');
         let y = parseInt(indexes[0]);
@@ -425,8 +516,19 @@ function drop(e) {
                 x -= 3;
             }
             if (checkHorPath(x, y, currentShip, field2)) {
+                const id = `${y}` + `${x}`;
+                const elem = document.getElementById(`${id}`);
+                const img = document.createElement('img');
+                img.src = currentShip.image;
+                img.style.position = "absolute";
+                img.style.top = `${y * 54 + 10 - y}px`;
+                img.style.left = `${x * 55 - x}px`;
+                elem.appendChild(img);
+
+
                 for (let i = 0; i < shiplength; i++) {
                     field2[y][x + i] = 1;
+                    currentShip.items[currentShip.quantity - 1].push([y, x + i]);
                 }
                 currentShip.quantity--;
             }
@@ -441,28 +543,47 @@ function drop(e) {
             }
 
             if (checkVertPath(x, y, currentShip, field2)) {
-                // e.target.style.backgroundColor = "#ccc";
+
+                const id = `${y}` + `${x}`;
+                const elem = document.getElementById(`${id}`);
+                const img = document.createElement('img');
+                img.src = currentShip.image;
+                img.style.position = "absolute";
+                img.style.top = `${y * 50}px`;
+                img.style.left = `${x * 55 + 25 - x}px`;
+                img.style.transform = "rotate(90deg)";
+                img.style.transformOrigin = "0% 50%";
+                elem.appendChild(img);
+
                 for (let i = 0; i < shiplength; i++) {
                     field2[y + i][x] = 1;
+                    currentShip.items[currentShip.quantity - 1].push([y + i, x]);
                 }
                 currentShip.quantity--;
             }
         }
 
         console.log(field2);
+        const shipsfilled = new Event('shipsfilled');
+        document.dispatchEvent(shipsfilled);
 
-
+        /*
         for (let i = 0; i < field2.length; i++) {
             for (let j = 0; j < field2[0].length; j++) {
                 if (field2[i][j] === 1) {
                     const id = `${i}` + `${j}`;
                     const elem = document.getElementById(`${id}`);
-                    if (elem.style.backgroundColor != "blue") {
-                        elem.style.backgroundColor = "blue";
+                    if (elem.style.backgroundColor != "yellow") {
+                        elem.style.backgroundColor = "yellow";
+                        elem.style.border = "2px solid black";
                     }
                 }
             }
         }
+        */
 
     }
 }
+
+
+
