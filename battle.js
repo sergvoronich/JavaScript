@@ -70,7 +70,7 @@ function startBattle() {
             } else if (currentField[y][x] == 1) {
                 currentField[y][x] = 3;
                 e.target.style.backgroundColor = "rgb(218, 136, 126)";
-                e.target.style.border = "2px dashed black";
+                //e.target.style.border = "2px dashed black";
                 // shotCompShip.push(hit);
                 console.log(shotCompShip);
                 killedCheck(hit, compships, shotCompShip);
@@ -120,6 +120,33 @@ function killedCheck(hit, ships) {
                 }
                 if (ships[i].shot[j] == ships[i].length) {
                     const ship = ships[i].items[j];
+                    let x = ship[0][1];
+                    let y = ship[0][0];
+                    if (ships.includes(ship1comp)) {
+                        const elem = document.getElementById(`${y}${x}comp`);
+                        if (ships[i].horiz[j] == true) {
+                            const id = `${y}` + `${x}`;
+                            const elem = document.getElementById(`${id}comp`);
+                            const img = document.createElement('img');
+                            img.src = ships[i].image;
+                            img.style.position = "absolute";
+                            img.style.top = `${y * 55 + 12 - y * 2}px`;
+                            img.style.left = `${x * 55 - x * 1.5}px`;
+                            elem.appendChild(img);
+                        } else {
+                            const id = `${y}` + `${x}`;
+                            const elem = document.getElementById(`${id}comp`);
+                            const img = document.createElement('img');
+                            img.src = ships[i].image;
+                            img.style.position = "absolute";
+                            img.style.top = `${y * 54 - 9 - y}px`;
+                            img.style.left = `${x * 55 + 25 - x}px`;
+                            img.style.transform = "rotate(90deg)";
+                            img.style.transformOrigin = "0% 50%";
+                            elem.appendChild(img);
+                        }
+                        console.log(ships[i].horiz[j]);
+                    }
                     paintKilledShip(ship, ships);
                 }
             }
@@ -128,18 +155,17 @@ function killedCheck(hit, ships) {
 }
 
 function paintKilledShip(ship, ships) {
-    console.log(ships.includes(ship1comp));
     for (let i = 0; i < ship.length; i++) {
         let x = ship[i][1];
         let y = ship[i][0];
         if (ships.includes(ship1comp)) {
             const cell = document.getElementById(`${y}${x}comp`);
             cell.style.backgroundColor = "brown";
-            cell.style.border = "2px solid black";
+            //cell.style.border = "2px solid black";
         } else if (ships.includes(ship1user)) {
             const cell = document.getElementById(`${y}${x}`);
             cell.style.backgroundColor = "brown";
-            cell.style.border = "2px solid black";
+            //cell.style.border = "2px solid black";
         }
 
     }

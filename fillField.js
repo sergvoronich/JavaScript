@@ -33,7 +33,9 @@ let ship1comp = {
     quantity: 1,
     items: [[]],
     shot: [0],
-    image: "/ships_images/Battleship/ShipBattleshipHull.png"
+    image: "/ships_images/Battleship/ShipBattleshipHull.png",
+    horiz: [],
+    width: 210,
 };
 
 let ship2comp = {
@@ -41,7 +43,9 @@ let ship2comp = {
     quantity: 2,
     items: [[], []],
     shot: [0, 0],
-    image: "/ships_images/Cruiser/ShipCruiserHull.png"
+    image: "/ships_images/Cruiser/ShipCruiserHull.png",
+    horiz: [],
+    width: 160,
 };
 
 let ship3comp = {
@@ -49,7 +53,9 @@ let ship3comp = {
     quantity: 3,
     items: [[], [], []],
     shot: [0, 0, 0],
-    image: "/ships_images/Destroyer/ShipDestroyerHull.png"
+    image: "/ships_images/Destroyer/ShipDestroyerHull.png",
+    horiz: [],
+    width: 107,
 };
 
 let ship4comp = {
@@ -57,7 +63,9 @@ let ship4comp = {
     quantity: 4,
     items: [[], [], [], []],
     shot: [0, 0, 0, 0],
-    image: "/ships_images/Plane/PlaneF-35Lightning2.png"
+    image: "/ships_images/Plane/PlaneF-35Lightning2.png",
+    horiz: [],
+    width: 54,
 };
 
 let ship1user = {
@@ -66,7 +74,9 @@ let ship1user = {
     display: null,
     items: [[]],
     shot: [0],
-    image: "/ships_images/Battleship/ShipBattleshipHull.png"
+    image: "/ships_images/Battleship/ShipBattleshipHull.png",
+    horiz: [],
+    width: 210,
 };
 
 let ship2user = {
@@ -75,7 +85,9 @@ let ship2user = {
     display: null,
     items: [[], []],
     shot: [0, 0],
-    image: "/ships_images/Cruiser/ShipCruiserHull.png"
+    image: "/ships_images/Cruiser/ShipCruiserHull.png",
+    horiz: [],
+    width: 160,
 };
 
 let ship3user = {
@@ -84,7 +96,9 @@ let ship3user = {
     display: null,
     items: [[], [], []],
     shot: [0, 0, 0],
-    image: "/ships_images/Destroyer/ShipDestroyerHull.png"
+    image: "/ships_images/Destroyer/ShipDestroyerHull.png",
+    horiz: [],
+    width: 107,
 };
 
 let ship4user = {
@@ -93,7 +107,9 @@ let ship4user = {
     display: null,
     items: [[], [], [], []],
     shot: [0, 0, 0, 0],
-    image: "/ships_images/Plane/PlaneF-35Lightning2.png"
+    image: "/ships_images/Plane/PlaneF-35Lightning2.png",
+    horiz: [],
+    width: 54,
 };
 
 
@@ -297,14 +313,16 @@ function fillField(ship, player) {
         let y = Math.floor(Math.random() * 10);
         if (checkHorPath(x, y, ship, field)) {
             quantity--;
+            ship.horiz.unshift(true);
             if (player == 'user') {
                 const id = `${y}` + `${x}`;
                 const elem = document.getElementById(`${id}`);
                 const img = document.createElement('img');
                 img.src = ship.image;
                 img.style.position = "absolute";
-                img.style.top = `${y * 54 + 10 - y}px`;
-                img.style.left = `${x * 55 - x}px`;
+                img.style.top = `${y * 55 + 12 - y * 2}px`;
+                img.style.left = `${x * 55 - x * 2}px`;
+                img.style.width = `${ship.width}px`;
                 elem.appendChild(img);
             }
 
@@ -314,14 +332,16 @@ function fillField(ship, player) {
             }
         } else if (checkVertPath(x, y, ship, field)) {
             quantity--;
+            ship.horiz.unshift(false);
             if (player == 'user') {
                 const id = `${y}` + `${x}`;
                 const elem = document.getElementById(`${id}`);
                 const img = document.createElement('img');
                 img.src = ship.image;
                 img.style.position = "absolute";
-                img.style.top = `${y * 53}px`;
-                img.style.left = `${x * 55 + 25 - x}px`;
+                img.style.top = `${y * 54 - 9 - y}px`;
+                img.style.left = `${x * 55 + 20 - x}px`;
+                img.style.width = `${ship.width}px`;
                 img.style.transform = "rotate(90deg)";
                 img.style.transformOrigin = "0% 50%";
                 elem.appendChild(img);
@@ -369,7 +389,6 @@ function autofill(e) {
 
     } else if (e.target == autoFillButton2) {
         temp = document.querySelector('.field2');
-
 
         fillField(ship1user, 'user');
         fillField(ship2user, 'user');
@@ -421,8 +440,8 @@ function autofill(e) {
 
 let fieldDisplay2 = document.querySelector(".field2");
 ship1user.display = document.querySelector(".ship1-table.active");
-ship2user.display = document.querySelector(".ship2-table");
-ship3user.display = document.querySelector(".ship3-table");
+ship2user.display = document.querySelector(".ship2-table.active");
+ship3user.display = document.querySelector(".ship3-table.active");
 ship4user.display = document.querySelector(".ship4-table");
 
 ship1user.display.addEventListener('dragstart', dragStart);
@@ -448,20 +467,53 @@ function mouseDown(e) {
 
 function horVertChange(e) {
     e.preventDefault();
-    let active = document.querySelector(".ship1-table.active");
-    let inactive = document.querySelector(".ship1-table.inactive");
-    active.classList.toggle("active");
-    active.classList.toggle("inactive");
-    inactive.classList.toggle("inactive");
-    inactive.classList.toggle("active");
-    ship1user.display = document.querySelector(".ship1-table.active");
-    console.log(ship1user.display);
-    console.log(ship1user);
-    ship1user.display.addEventListener('dragstart', dragStart);
-    ship1user.display.addEventListener('mousedown', mouseDown);
-    ship1user.display.addEventListener('contextmenu', horVertChange);
-    ship2user.display.addEventListener('contextmenu', horVertChange);
-    ship3user.display.addEventListener('contextmenu', horVertChange);
+    console.log(e.target.closest(".ship1"));
+    let active;
+    let inactive;
+    let img;
+
+    if (e.target.closest(".ship1") != null) {
+        active = document.querySelector(".ship1-table.active");
+        console.log(active);
+        inactive = document.querySelector(".ship1-table.inactive");
+        img = document.querySelector(".ship1 img");
+        active.classList.toggle("active");
+        active.classList.toggle("inactive");
+        inactive.classList.toggle("inactive");
+        inactive.classList.toggle("active");
+        img.classList.toggle("rotate");
+        ship1user.display = document.querySelector(".ship1-table.active");
+        ship1user.display.addEventListener('dragstart', dragStart);
+        ship1user.display.addEventListener('mousedown', mouseDown);
+        ship1user.display.addEventListener('contextmenu', horVertChange);
+    } else if (e.target.closest(".ship2") != null) {
+        console.log(active);
+        active = document.querySelector(".ship2-table.active");
+        inactive = document.querySelector(".ship2-table.inactive");
+        img = document.querySelector(".ship2 img");
+        active.classList.toggle("active");
+        active.classList.toggle("inactive");
+        inactive.classList.toggle("inactive");
+        inactive.classList.toggle("active");
+        img.classList.toggle("rotate");
+        ship2user.display = document.querySelector(".ship2-table.active");
+        ship2user.display.addEventListener('dragstart', dragStart);
+        ship2user.display.addEventListener('mousedown', mouseDown);
+        ship2user.display.addEventListener('contextmenu', horVertChange);
+    } else if (e.target.closest(".ship3") != null) {
+        active = document.querySelector(".ship3-table.active");
+        inactive = document.querySelector(".ship3-table.inactive");
+        img = document.querySelector(".ship3 img");
+        active.classList.toggle("active");
+        active.classList.toggle("inactive");
+        inactive.classList.toggle("inactive");
+        inactive.classList.toggle("active");
+        img.classList.toggle("rotate");
+        ship3user.display = document.querySelector(".ship3-table.active");
+        ship3user.display.addEventListener('dragstart', dragStart);
+        ship3user.display.addEventListener('mousedown', mouseDown);
+        ship3user.display.addEventListener('contextmenu', horVertChange);
+    }
 }
 
 function dragStart(e) {
@@ -500,12 +552,11 @@ function dragleave(e) {
 }
 
 function drop(e) {
-    console.log(currentShip);
     if (e.target.tagName == "TD" && currentShip.quantity > 0) {
         let indexes = e.target.getAttribute("id").split('');
         let y = parseInt(indexes[0]);
         let x = parseInt(indexes[1]);
-        if (dragPoint.closest("#ship1-hor")) {
+        if (dragPoint.closest(".ship-table-hor")) {
             // e.target.style.backgroundColor = "#ccc";
             if (dragPoint.classList.contains("part02")) {
                 x -= 1;
@@ -522,7 +573,8 @@ function drop(e) {
                 img.src = currentShip.image;
                 img.style.position = "absolute";
                 img.style.top = `${y * 54 + 10 - y}px`;
-                img.style.left = `${x * 55 - x}px`;
+                img.style.left = `${x * 55 - x * 2}px`;
+                img.style.width = `${currentShip.width}px`;
                 elem.appendChild(img);
 
 
@@ -549,8 +601,9 @@ function drop(e) {
                 const img = document.createElement('img');
                 img.src = currentShip.image;
                 img.style.position = "absolute";
-                img.style.top = `${y * 50}px`;
-                img.style.left = `${x * 55 + 25 - x}px`;
+                img.style.top = `${y * 54 - 9 - y}px`;
+                img.style.left = `${x * 55 + 20 - x}px`;
+                img.style.width = `${currentShip.width}px`;
                 img.style.transform = "rotate(90deg)";
                 img.style.transformOrigin = "0% 50%";
                 elem.appendChild(img);
