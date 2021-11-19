@@ -70,6 +70,13 @@ function startBattle() {
             } else if (currentField[y][x] == 1) {
                 currentField[y][x] = 3;
                 e.target.style.backgroundColor = "rgb(218, 136, 126)";
+                const img = document.createElement('img');
+                //img.src = "/ships_images/fire.gif";
+                //img.style.position = "absolute";
+                //img.style.top = `0`;
+                //img.style.left = `0`;
+                //img.style.width = `45px`;
+                //e.target.appendChild(img);
                 //e.target.style.border = "2px dashed black";
                 // shotCompShip.push(hit);
                 console.log(shotCompShip);
@@ -140,7 +147,7 @@ function killedCheck(hit, ships) {
                             img.src = ships[i].image;
                             img.style.position = "absolute";
                             img.style.top = `${y * 54 - 9 - y}px`;
-                            img.style.left = `${x * 55 + 25 - x}px`;
+                            img.style.left = `${x * 55 + 20 - x}px`;
                             img.style.transform = "rotate(90deg)";
                             img.style.transformOrigin = "0% 50%";
                             elem.appendChild(img);
