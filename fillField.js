@@ -26,9 +26,11 @@ let field2 = [
     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
 ];
 
-const td = document.querySelector("td");
-td.style.width = "50px";
-td.style.height = "50px";
+const td = document.querySelectorAll("td");
+for (let i = 0; i < td.length; i++) {
+    td[i].style.width = "50px";
+    td[i].style.height = "50px";
+}
 
 
 let ship1comp = {
