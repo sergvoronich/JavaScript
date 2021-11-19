@@ -33,7 +33,7 @@ let ship1comp = {
     quantity: 1,
     items: [[]],
     shot: [0],
-    image: "/ships_images/Battleship/ShipBattleshipHull.png",
+    image: "ships_images/Battleship/ShipBattleshipHull.png",
     horiz: [],
     width: 210,
 };
@@ -43,7 +43,7 @@ let ship2comp = {
     quantity: 2,
     items: [[], []],
     shot: [0, 0],
-    image: "/ships_images/Cruiser/ShipCruiserHull.png",
+    image: "ships_images/Cruiser/ShipCruiserHull.png",
     horiz: [],
     width: 160,
 };
@@ -53,7 +53,7 @@ let ship3comp = {
     quantity: 3,
     items: [[], [], []],
     shot: [0, 0, 0],
-    image: "/ships_images/Destroyer/ShipDestroyerHull.png",
+    image: "ships_images/Destroyer/ShipDestroyerHull.png",
     horiz: [],
     width: 107,
 };
@@ -63,7 +63,7 @@ let ship4comp = {
     quantity: 4,
     items: [[], [], [], []],
     shot: [0, 0, 0, 0],
-    image: "/ships_images/Plane/PlaneF-35Lightning2.png",
+    image: "ships_images/Plane/PlaneF-35Lightning2.png",
     horiz: [],
     width: 54,
 };
@@ -74,7 +74,7 @@ let ship1user = {
     display: null,
     items: [[]],
     shot: [0],
-    image: "/ships_images/Battleship/ShipBattleshipHull.png",
+    image: "ships_images/Battleship/ShipBattleshipHull.png",
     horiz: [],
     width: 210,
 };
@@ -85,7 +85,7 @@ let ship2user = {
     display: null,
     items: [[], []],
     shot: [0, 0],
-    image: "/ships_images/Cruiser/ShipCruiserHull.png",
+    image: "ships_images/Cruiser/ShipCruiserHull.png",
     horiz: [],
     width: 160,
 };
@@ -96,7 +96,7 @@ let ship3user = {
     display: null,
     items: [[], [], []],
     shot: [0, 0, 0],
-    image: "/ships_images/Destroyer/ShipDestroyerHull.png",
+    image: "ships_images/Destroyer/ShipDestroyerHull.png",
     horiz: [],
     width: 107,
 };
@@ -107,7 +107,7 @@ let ship4user = {
     display: null,
     items: [[], [], [], []],
     shot: [0, 0, 0, 0],
-    image: "/ships_images/Plane/PlaneF-35Lightning2.png",
+    image: "ships_images/Plane/PlaneF-35Lightning2.png",
     horiz: [],
     width: 54,
 };
