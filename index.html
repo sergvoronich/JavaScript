@@ -4,7 +4,10 @@
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lobster&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
     <title>Battleship</title>
 </head>
@@ -261,7 +264,7 @@
         </div>
         <div class="ships">
             <div class="ship ship1">
-                <img src="ships_images/Battleship/ShipBattleshipHull.png" alt="ship1">
+                <img src="/ships_images/Battleship/ShipBattleshipHull.png" alt="ship1">
                 <table class="ship-table-hor ship1-table active" draggable="true">
                     <tr>
                         <td class="part01"></td>
@@ -284,9 +287,10 @@
                         <td class="part04"></td>
                     </tr>
                 </table>
+                <div class="ship-count count1"></div>
             </div>
             <div class="ship ship2">
-                <img src="ships_images/Cruiser/ShipCruiserHull.png" alt="ship2">
+                <img src="/ships_images/Cruiser/ShipCruiserHull.png" alt="ship2">
                 <table class="ship-table-hor ship2-table active" draggable="true">
                     <tr>
                         <td class="part01"></td>
@@ -305,9 +309,10 @@
                         <td class="part03"></td>
                     </tr>
                 </table>
+                <div class="ship-count count2"></div>
             </div>
             <div class="ship ship3">
-                <img src="ships_images/Destroyer/ShipDestroyerHull.png" alt="ship3">
+                <img src="/ships_images/Destroyer/ShipDestroyerHull.png" alt="ship3">
                 <table class="ship-table-hor ship3-table active" draggable="true">
                     <tr>
                         <td class="part01"></td>
@@ -322,27 +327,32 @@
                         <td class="part02"></td>
                     </tr>
                 </table>
+                <div class="ship-count count3"></div>
             </div>
             <div class="ship ship4">
-                <img src="ships_images/Plane/PlaneF-35Lightning2.png" alt="ship4">
+                <img src="/ships_images/Plane/PlaneF-35Lightning2.png" alt="ship4">
                 <table class="ship-table-hor ship4-table" draggable="true">
                     <tr>
                         <td class="part01"></td>
                     </tr>
                 </table>
+                <div class="ship-count count4"></div>
             </div>
         </div>
     </div>
-    <button type="button" id="autoFillButton">Автозаполнение для компьютера</button>
-    <button type="button" id="autoFillButton2">Автозаполнение для пользователя</button>
-    <div class="rules">
-        <p>Правила игры:</p>
-        <p>Перетаскивайте корабли мышкой на поле или в любой момент нажмите кнопку
-            "Автозаполнение для пользователя", чтобы автоматически заполнить поле.
-            Щелкните по картинке нужного корабля правой кнопкой мышки перед началом перетаскивания, чтобы
-            изменить положение корабля на вертикальное или обратно.
-            После появления сообщения "Битва началась" щелкайте левой кнопкой мыши по полю противника, чтобы атаковать.
-        </p>
+    <div class="container">
+        <button type="button" id="autoFillButton">Автозаполнение для компьютера</button>
+        <button type="button" id="autoFillButton2">Автозаполнение для пользователя</button>
+        <div class="rules">
+            <p>Правила игры:</p>
+            <p>Перетаскивайте корабли мышкой на поле или в любой момент нажмите кнопку
+                "Автозаполнение для пользователя", чтобы автоматически заполнить поле.
+                Щелкните по картинке нужного корабля правой кнопкой мышки перед началом перетаскивания, чтобы
+                изменить положение корабля на вертикальное или обратно.
+                После появления сообщения "Битва началась" щелкайте левой кнопкой мыши по полю противника, чтобы
+                атаковать.
+            </p>
+        </div>
     </div>
     <script src="fillField.js"></script>
     <script src="battle.js"></script>

@@ -26,19 +26,14 @@ let field2 = [
     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
 ];
 
-const td = document.querySelectorAll("td");
-for (let i = 0; i < td.length; i++) {
-    td[i].style.width = "50px";
-    td[i].style.height = "50px";
-}
-
 
 let ship1comp = {
     length: 4,
     quantity: 1,
     items: [[]],
+    adjacentArea: [[]],
     shot: [0],
-    image: "ships_images/Battleship/ShipBattleshipHull.png",
+    image: "/ships_images/Battleship/ShipBattleshipHull.png",
     horiz: [],
     width: 210,
 };
@@ -47,8 +42,9 @@ let ship2comp = {
     length: 3,
     quantity: 2,
     items: [[], []],
+    adjacentArea: [[], []],
     shot: [0, 0],
-    image: "ships_images/Cruiser/ShipCruiserHull.png",
+    image: "/ships_images/Cruiser/ShipCruiserHull.png",
     horiz: [],
     width: 160,
 };
@@ -57,8 +53,9 @@ let ship3comp = {
     length: 2,
     quantity: 3,
     items: [[], [], []],
+    adjacentArea: [[], [], []],
     shot: [0, 0, 0],
-    image: "ships_images/Destroyer/ShipDestroyerHull.png",
+    image: "/ships_images/Destroyer/ShipDestroyerHull.png",
     horiz: [],
     width: 107,
 };
@@ -67,8 +64,9 @@ let ship4comp = {
     length: 1,
     quantity: 4,
     items: [[], [], [], []],
+    adjacentArea: [[], [], [], []],
     shot: [0, 0, 0, 0],
-    image: "ships_images/Plane/PlaneF-35Lightning2.png",
+    image: "/ships_images/Plane/PlaneF-35Lightning2.png",
     horiz: [],
     width: 54,
 };
@@ -78,8 +76,9 @@ let ship1user = {
     quantity: 1,
     display: null,
     items: [[]],
+    adjacentArea: [[]],
     shot: [0],
-    image: "ships_images/Battleship/ShipBattleshipHull.png",
+    image: "/ships_images/Battleship/ShipBattleshipHull.png",
     horiz: [],
     width: 210,
 };
@@ -89,8 +88,9 @@ let ship2user = {
     quantity: 2,
     display: null,
     items: [[], []],
+    adjacentArea: [[], []],
     shot: [0, 0],
-    image: "ships_images/Cruiser/ShipCruiserHull.png",
+    image: "/ships_images/Cruiser/ShipCruiserHull.png",
     horiz: [],
     width: 160,
 };
@@ -100,8 +100,9 @@ let ship3user = {
     quantity: 3,
     display: null,
     items: [[], [], []],
+    adjacentArea: [[], [], []],
     shot: [0, 0, 0],
-    image: "ships_images/Destroyer/ShipDestroyerHull.png",
+    image: "/ships_images/Destroyer/ShipDestroyerHull.png",
     horiz: [],
     width: 107,
 };
@@ -111,8 +112,9 @@ let ship4user = {
     quantity: 4,
     display: null,
     items: [[], [], [], []],
+    adjacentArea: [[], [], [], []],
     shot: [0, 0, 0, 0],
-    image: "ships_images/Plane/PlaneF-35Lightning2.png",
+    image: "/ships_images/Plane/PlaneF-35Lightning2.png",
     horiz: [],
     width: 54,
 };
@@ -342,14 +344,15 @@ function fillField(ship, player) {
                 const id = `${y}` + `${x}`;
                 const elem = document.getElementById(`${id}`);
                 const img = document.createElement('img');
+                elem.appendChild(img);
+                const imgstyle = getComputedStyle(img);
                 img.src = ship.image;
                 img.style.position = "absolute";
-                img.style.top = `${y * 54 - 9 - y}px`;
-                img.style.left = `${x * 55 + 20 - x}px`;
+                img.style.top = `${y * 53}px`;
+                img.style.left = `${x * 53 + 26 + parseFloat(imgstyle.height) / 2}px`;
                 img.style.width = `${ship.width}px`;
                 img.style.transform = "rotate(90deg)";
-                img.style.transformOrigin = "0% 50%";
-                elem.appendChild(img);
+                img.style.transformOrigin = "0% 0%";
             }
             for (let i = 0; i < ship.length; i++) {
                 field[y + i][x] = 1;
@@ -406,10 +409,11 @@ function autofill(e) {
 
     const table = temp.getElementsByTagName("td");
     for (let i = 0; i < table.length; i++) {
-        table[i].style.backgroundColor = "rgb(116, 183, 238)";
+        table[i].style.backgroundColor = "rgb(116, 183, 238, 0.5)";
     };
 
     console.log(field1);
+    countUpdate();
 
     const shipsfilled = new Event('shipsfilled');
     document.dispatchEvent(shipsfilled);
@@ -461,6 +465,18 @@ ship4user.display.addEventListener('mousedown', mouseDown);
 let currentShip = {};
 let dragPoint = null;
 let shiplength = 0;
+const count1 = document.querySelector(".count1");
+const count2 = document.querySelector(".count2");
+const count3 = document.querySelector(".count3");
+const count4 = document.querySelector(".count4");
+countUpdate();
+
+function countUpdate() {
+    count1.textContent = `x ${ship1user.quantity}`;
+    count2.textContent = `x ${ship2user.quantity}`;
+    count3.textContent = `x ${ship3user.quantity}`;
+    count4.textContent = `x ${ship4user.quantity}`;
+}
 
 ship1user.display.addEventListener('contextmenu', horVertChange);
 ship2user.display.addEventListener('contextmenu', horVertChange);
@@ -472,7 +488,6 @@ function mouseDown(e) {
 
 function horVertChange(e) {
     e.preventDefault();
-    console.log(e.target.closest(".ship1"));
     let active;
     let inactive;
     let img;
@@ -541,13 +556,6 @@ fieldDisplay2.addEventListener('drop', drop);
 
 function dragover(e) {
     e.preventDefault();
-    //if (e.target.tagName == "TD") {
-    //  if (dragPoint.classList.contains("part01")) {
-
-    //}
-
-    // e.target.style.backgroundColor = "blue";
-    //}
 }
 
 function dragleave(e) {
@@ -571,7 +579,11 @@ function drop(e) {
             } else if (dragPoint.classList.contains("part04")) {
                 x -= 3;
             }
+            dragPoint = null;
             if (checkHorPath(x, y, currentShip, field2)) {
+                const style = getComputedStyle(e.target);
+                console.log(style);
+                console.log(style.y);
                 const id = `${y}` + `${x}`;
                 const elem = document.getElementById(`${id}`);
                 const img = document.createElement('img');
@@ -588,8 +600,9 @@ function drop(e) {
                     currentShip.items[currentShip.quantity - 1].push([y, x + i]);
                 }
                 currentShip.quantity--;
+                countUpdate();
             }
-        } else {
+        } else if (dragPoint.closest(".ship-table-vert")) {
             if (dragPoint.classList.contains("part02")) {
                 y -= 1;
                 // field2[y][x - 1] = 1;
@@ -598,26 +611,27 @@ function drop(e) {
             } else if (dragPoint.classList.contains("part04")) {
                 y -= 3;
             }
-
+            dragPoint = null;
             if (checkVertPath(x, y, currentShip, field2)) {
-
                 const id = `${y}` + `${x}`;
                 const elem = document.getElementById(`${id}`);
                 const img = document.createElement('img');
+                elem.appendChild(img);
+                const imgstyle = getComputedStyle(img);
                 img.src = currentShip.image;
                 img.style.position = "absolute";
-                img.style.top = `${y * 54 - 9 - y}px`;
-                img.style.left = `${x * 55 + 20 - x}px`;
+                img.style.top = `${y * 53}px`;
+                img.style.left = `${x * 53 + 26 + parseFloat(imgstyle.height) / 2}px`;
                 img.style.width = `${currentShip.width}px`;
                 img.style.transform = "rotate(90deg)";
-                img.style.transformOrigin = "0% 50%";
-                elem.appendChild(img);
+                img.style.transformOrigin = "0% 0%";
 
                 for (let i = 0; i < shiplength; i++) {
                     field2[y + i][x] = 1;
                     currentShip.items[currentShip.quantity - 1].push([y + i, x]);
                 }
                 currentShip.quantity--;
+                countUpdate();
             }
         }
 
