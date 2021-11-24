@@ -33,7 +33,7 @@ let ship1comp = {
     items: [[]],
     adjacentArea: [[]],
     shot: [0],
-    image: "/ships_images/Battleship/ShipBattleshipHull.png",
+    image: "ships_images/Battleship/ShipBattleshipHull.png",
     horiz: [],
     width: 210,
 };
@@ -44,7 +44,7 @@ let ship2comp = {
     items: [[], []],
     adjacentArea: [[], []],
     shot: [0, 0],
-    image: "/ships_images/Cruiser/ShipCruiserHull.png",
+    image: "ships_images/Cruiser/ShipCruiserHull.png",
     horiz: [],
     width: 160,
 };
@@ -55,7 +55,7 @@ let ship3comp = {
     items: [[], [], []],
     adjacentArea: [[], [], []],
     shot: [0, 0, 0],
-    image: "/ships_images/Destroyer/ShipDestroyerHull.png",
+    image: "ships_images/Destroyer/ShipDestroyerHull.png",
     horiz: [],
     width: 107,
 };
@@ -66,7 +66,7 @@ let ship4comp = {
     items: [[], [], [], []],
     adjacentArea: [[], [], [], []],
     shot: [0, 0, 0, 0],
-    image: "/ships_images/Plane/PlaneF-35Lightning2.png",
+    image: "ships_images/Plane/PlaneF-35Lightning2.png",
     horiz: [],
     width: 54,
 };
@@ -78,7 +78,7 @@ let ship1user = {
     items: [[]],
     adjacentArea: [[]],
     shot: [0],
-    image: "/ships_images/Battleship/ShipBattleshipHull.png",
+    image: "ships_images/Battleship/ShipBattleshipHull.png",
     horiz: [],
     width: 210,
 };
@@ -90,7 +90,7 @@ let ship2user = {
     items: [[], []],
     adjacentArea: [[], []],
     shot: [0, 0],
-    image: "/ships_images/Cruiser/ShipCruiserHull.png",
+    image: "ships_images/Cruiser/ShipCruiserHull.png",
     horiz: [],
     width: 160,
 };
@@ -102,7 +102,7 @@ let ship3user = {
     items: [[], [], []],
     adjacentArea: [[], [], []],
     shot: [0, 0, 0],
-    image: "/ships_images/Destroyer/ShipDestroyerHull.png",
+    image: "ships_images/Destroyer/ShipDestroyerHull.png",
     horiz: [],
     width: 107,
 };
@@ -114,7 +114,7 @@ let ship4user = {
     items: [[], [], [], []],
     adjacentArea: [[], [], [], []],
     shot: [0, 0, 0, 0],
-    image: "/ships_images/Plane/PlaneF-35Lightning2.png",
+    image: "ships_images/Plane/PlaneF-35Lightning2.png",
     horiz: [],
     width: 54,
 };
