@@ -1,6 +1,9 @@
 const allships = [ship1comp, ship2comp, ship3comp, ship4comp, ship1user, ship2user, ship3user, ship4user];
 const compships = [ship1comp, ship2comp, ship3comp, ship4comp];
 const userships = [ship1user, ship2user, ship3user, ship4user];
+let woundedShipDetected = "no";
+let firstHitCell = [];
+let currentHitCell = [];
 
 function startBattle() {
     console.log('Battle started!');
@@ -77,23 +80,24 @@ function startBattle() {
         }
     }
 
-    const woundedShipDetected = false;
+
 
     function compShoot() {
+        console.log(woundedShipDetected);
         enemyfield.classList.remove("red-border");
         userfield.classList.add("red-border");
         //compMoveNotice();
         //setTimeout(userMoveNotice, 1500);
         setTimeout(switchPlayer, 2000);
 
-        let firstHitCell;
-        let currentHitCell;
+        let counter = 0;
 
-        if (woundedShipDetected) {
+        if (woundedShipDetected == "yes" && level == 2) {
             setTimeout(shootIfWounded, 1500);
         } else {
             setTimeout(shoot, 1500);
         }
+
         enemyfield.classList.remove("user-shoot");
 
         function shoot() {
@@ -105,9 +109,14 @@ function startBattle() {
                 field2[y][x] = 2;
                 cell.textContent = "o";
             } else if (field2[y][x] == 1) {
-                firstHitCell = [y, x];
-                currentHitCell = [y, x];
-                woundedShipDetected = true;
+                firstHitCell = [];
+                currentHitCell = [];
+                firstHitCell.push(y);
+                firstHitCell.push(x);
+                currentHitCell.push(y);
+                currentHitCell.push(x);
+                woundedShipDetected = "yes";
+                console.log("Выполняется функция shoot");
                 field2[y][x] = 3;
                 cell.style.backgroundColor = `${woundedColor}`;
                 killedCheck(hit, userships);
@@ -117,7 +126,49 @@ function startBattle() {
         }
 
         function shootIfWounded() {
+            let number = Math.floor(Math.random() * 4);
+            let x, y;
 
+            if (number == 0) {
+                x = currentHitCell[1] - 1;
+                y = currentHitCell[0];
+            } else if (number == 1) {
+                x = currentHitCell[1] + 1;
+                y = currentHitCell[0];
+            } else if (number == 2) {
+                x = currentHitCell[1];
+                y = currentHitCell[0] - 1;
+            } else if (number == 3) {
+                x = currentHitCell[1];
+                y = currentHitCell[0] + 1;
+            }
+
+            if (x > 9 || y > 9 || x < 0 || y < 0) {
+                shootIfWounded();
+            } else {
+                let hit2 = [y, x];
+                console.log(currentHitCell);
+                console.log(hit2);
+
+                const cell = document.getElementById(`${y}${x}`);
+                if (field2[y][x] == 0) {
+                    field2[y][x] = 2;
+                    cell.textContent = "o";
+                    counter = 0;
+                } else if (field2[y][x] == 1) {
+                    currentHitCell = [y, x];
+                    field2[y][x] = 3;
+                    cell.style.backgroundColor = `${woundedColor}`;
+                    killedCheck(hit2, userships);
+                    counter = 0;
+                } else if (field2[y][x] == 2 || field2[y][x] == 3) {
+                    counter++;
+                    if (counter > 64) {
+                        currentHitCell = firstHitCell;
+                    }
+                    shootIfWounded();
+                }
+            }
         }
     }
 }
@@ -129,61 +180,64 @@ function killedCheck(hit, ships) {
                 if (ships[i].items[j][n][0] == hit[0] && ships[i].items[j][n][1] == hit[1]) {
                     ships[i].shot[j] += 1;
                 }
-                if (ships[i].shot[j] == ships[i].length) {
-                    const ship = ships[i].items[j];
-                    const shipAdjacentArea = ships[i].adjacentArea[j];
-                    let x = ship[0][1];
-                    let y = ship[0][0];
-                    if (ships.includes(ship1comp)) {
-                        for (let i = 0; i < shipAdjacentArea.length; i++) {
-                            const a = shipAdjacentArea[i][0];
-                            const b = shipAdjacentArea[i][1];
-                            if (field1[a][b] == 0) {
-                                field1[a][b] = 2;
-                                const cell = document.getElementById(`${a}${b}comp`);
-                                cell.textContent = "o";
-                            }
+            }
+            console.log(ships[i].shot[j] == ships[i].length);
+            if (ships[i].shot[j] === ships[i].length) {
+                ships[i].shot[j] = "killed";
+                const ship = ships[i].items[j];
+                const shipAdjacentArea = ships[i].adjacentArea[j];
+                let x = ship[0][1];
+                let y = ship[0][0];
+                if (ships.includes(ship1comp)) {
+                    for (let i = 0; i < shipAdjacentArea.length; i++) {
+                        const a = shipAdjacentArea[i][0];
+                        const b = shipAdjacentArea[i][1];
+                        if (field1[a][b] == 0) {
+                            field1[a][b] = 2;
+                            const cell = document.getElementById(`${a}${b}comp`);
+                            cell.textContent = "o";
                         }
-
-                        if (ships[i].horiz[j] == true) {
-                            const id = `${y}` + `${x}`;
-                            const elem = document.getElementById(`${id}comp`);
-                            const img = document.createElement('img');
-                            img.src = ships[i].image;
-                            elem.appendChild(img);
-                            const imgstyle = getComputedStyle(img);
-                            img.style.position = "absolute";
-                            img.style.top = `${y * 53 + 25 - parseFloat(imgstyle.height) / 2}px`;
-                            img.style.left = `${x * 55 - x * 2}px`;
-                            img.style.width = `${ships[i].width}px`;
-                        } else {
-                            const id = `${y}` + `${x}`;
-                            const elem = document.getElementById(`${id}comp`);
-                            const img = document.createElement('img');
-                            img.src = ships[i].image;
-                            elem.appendChild(img);
-                            const imgstyle = getComputedStyle(img);
-                            img.style.position = "absolute";
-                            img.style.top = `${y * 53}px`;
-                            img.style.left = `${x * 53 + 27 + parseFloat(imgstyle.height) / 2}px`;
-                            img.style.width = `${ships[i].width}px`;
-                            img.style.transform = "rotate(90deg)";
-                            img.style.transformOrigin = "0% 0%";
-                        }
-                        console.log(ships[i].horiz[j]);
-                        paintKilledShip(ship, ships);
-                    } else {
-                        for (let i = 0; i < shipAdjacentArea.length; i++) {
-                            const a = shipAdjacentArea[i][0];
-                            const b = shipAdjacentArea[i][1];
-                            if (field2[a][b] == 0) {
-                                field2[a][b] = 2;
-                                const cell = document.getElementById(`${a}${b}`);
-                                cell.textContent = "o";
-                            }
-                        }
-                        paintKilledShip(ship, ships);
                     }
+
+                    if (ships[i].horiz[j] == true) {
+                        const id = `${y}` + `${x}`;
+                        const elem = document.getElementById(`${id}comp`);
+                        const img = document.createElement('img');
+                        img.src = ships[i].image;
+                        elem.appendChild(img);
+                        const imgstyle = getComputedStyle(img);
+                        img.style.position = "absolute";
+                        img.style.top = `${y * 53 + 25 - parseFloat(imgstyle.height) / 2}px`;
+                        img.style.left = `${x * 55 - x * 2}px`;
+                        img.style.width = `${ships[i].width}px`;
+                    } else {
+                        const id = `${y}` + `${x}`;
+                        const elem = document.getElementById(`${id}comp`);
+                        const img = document.createElement('img');
+                        img.src = ships[i].image;
+                        elem.appendChild(img);
+                        const imgstyle = getComputedStyle(img);
+                        img.style.position = "absolute";
+                        img.style.top = `${y * 53}px`;
+                        img.style.left = `${x * 53 + 27 + parseFloat(imgstyle.height) / 2}px`;
+                        img.style.width = `${ships[i].width}px`;
+                        img.style.transform = "rotate(90deg)";
+                        img.style.transformOrigin = "0% 0%";
+                    }
+                    paintKilledShip(ship, ships);
+                } else {
+                    for (let i = 0; i < shipAdjacentArea.length; i++) {
+                        const a = shipAdjacentArea[i][0];
+                        const b = shipAdjacentArea[i][1];
+                        if (field2[a][b] == 0) {
+                            field2[a][b] = 2;
+                            const cell = document.getElementById(`${a}${b}`);
+                            cell.textContent = "o";
+                        }
+                    }
+                    woundedShipDetected = "no";
+                    console.log("Вот тут его не должно быть!");
+                    paintKilledShip(ship, ships);
                 }
             }
         }

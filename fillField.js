@@ -27,6 +27,7 @@ let field2 = [
 ];
 
 
+let level = 2;
 const woundedColor = "rgba(218, 136, 126, 0.6)";
 const killedColor = "rgba(73, 1, 1, 0.6)";
 
