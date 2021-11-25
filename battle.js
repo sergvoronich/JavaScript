@@ -59,7 +59,7 @@ function startBattle() {
                     switchPlayer();
                 } else if (currentField[y][x] == 1) {
                     currentField[y][x] = 3;
-                    e.target.style.backgroundColor = "rgb(218, 136, 126, 0.5)";
+                    e.target.style.backgroundColor = `${woundedColor}`;
                     //const img = document.createElement('img');
                     //img.src = "/ships_images/fire.gif";
                     //img.style.position = "absolute";
@@ -98,7 +98,7 @@ function startBattle() {
                 cell.textContent = "o";
             } else if (field2[y][x] == 1) {
                 field2[y][x] = 3;
-                cell.style.backgroundColor = "rgb(218, 136, 126, 0.5)";
+                cell.style.backgroundColor = `${woundedColor}`;
                 killedCheck(hit, userships);
             } else if (field2[y][x] == 2 || field2[y][x] == 3) {
                 shoot();
@@ -129,27 +129,31 @@ function killedCheck(hit, ships) {
                                 cell.textContent = "o";
                             }
                         }
-                        //const elem = document.getElementById(`${y}${x}comp`);
+
                         if (ships[i].horiz[j] == true) {
                             const id = `${y}` + `${x}`;
                             const elem = document.getElementById(`${id}comp`);
                             const img = document.createElement('img');
                             img.src = ships[i].image;
-                            img.style.position = "absolute";
-                            img.style.top = `${y * 55 + 12 - y * 2}px`;
-                            img.style.left = `${x * 55 - x * 1.5}px`;
                             elem.appendChild(img);
+                            const imgstyle = getComputedStyle(img);
+                            img.style.position = "absolute";
+                            img.style.top = `${y * 53 + 25 - parseFloat(imgstyle.height) / 2}px`;
+                            img.style.left = `${x * 55 - x * 2}px`;
+                            img.style.width = `${ships[i].width}px`;
                         } else {
                             const id = `${y}` + `${x}`;
                             const elem = document.getElementById(`${id}comp`);
                             const img = document.createElement('img');
                             img.src = ships[i].image;
-                            img.style.position = "absolute";
-                            img.style.top = `${y * 54 - 9 - y}px`;
-                            img.style.left = `${x * 55 + 20 - x}px`;
-                            img.style.transform = "rotate(90deg)";
-                            img.style.transformOrigin = "0% 50%";
                             elem.appendChild(img);
+                            const imgstyle = getComputedStyle(img);
+                            img.style.position = "absolute";
+                            img.style.top = `${y * 53}px`;
+                            img.style.left = `${x * 53 + 27 + parseFloat(imgstyle.height) / 2}px`;
+                            img.style.width = `${ships[i].width}px`;
+                            img.style.transform = "rotate(90deg)";
+                            img.style.transformOrigin = "0% 0%";
                         }
                         console.log(ships[i].horiz[j]);
                         paintKilledShip(ship, ships);
@@ -177,12 +181,14 @@ function paintKilledShip(ship, ships) {
         let y = ship[i][0];
         if (ships.includes(ship1comp)) {
             const cell = document.getElementById(`${y}${x}comp`);
-            cell.style.backgroundColor = "rgba(21, 78, 165, 0.5)";
+            cell.style.backgroundColor = `${killedColor}`;
             //cell.style.border = "2px solid black";
         } else if (ships.includes(ship1user)) {
             const cell = document.getElementById(`${y}${x}`);
-            cell.style.backgroundColor = "rgba(21, 78, 165, 0.5)";
+            cell.style.backgroundColor = `${killedColor}`;
             //cell.style.border = "2px solid black";
+            //cell.style.backgroundColor = "rgba(21, 78, 165, 0.2)";
+            //cell.style.backgroundColor = "rgba(255, 0, 0, 0.2)";
         }
 
     }
@@ -241,11 +247,24 @@ function shipsFilledCheck() {
     for (let i = 0; i < allships.length; i++) {
         if (allships[i].quantity != 0) {
             errors++;
+        } else {
+            if (userships.includes(allships[i])) {
+                if (allships[i].length == 4) {
+                    ship1.classList.add("inactive");
+                } else if (allships[i].length == 3) {
+                    ship2.classList.add("inactive");
+                } else if (allships[i].length == 2) {
+                    ship3.classList.add("inactive");
+                } else if (allships[i].length == 1) {
+                    ship4.classList.add("inactive");
+                }
+            }
         }
     }
     if (errors == 0) {
-        const ready = new Event('ready_to_battle');
-        document.dispatchEvent(ready);
+        //const ready = new Event('ready_to_battle');
+        //document.dispatchEvent(ready);
+        return true;
     } else {
         return false;
     }
@@ -278,11 +297,24 @@ function shipsAdjacentAreaCapture() {
     }
 }
 
+function readyToBattleCheck() {
+    let ready = shipsFilledCheck();
+    if (ready) {
+        startBattle();
+        resetButton.classList.add("inactive");
+        startButton.classList.add("inactive");
+        autoFillButton.classList.add("inactive");
+    }
+}
+
 
 
 
 document.addEventListener('shipsfilled', shipsFilledCheck);
-document.addEventListener('ready_to_battle', startBattle);
+//document.addEventListener('ready_to_battle', startBattle);
+
+const startButton = document.getElementById("startButton");
+startButton.addEventListener('click', readyToBattleCheck);
 
 
 
