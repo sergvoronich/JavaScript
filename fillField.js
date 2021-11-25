@@ -27,6 +27,19 @@ let field2 = [
 ];
 
 
+const woundedColor = "rgba(218, 136, 126, 0.6)";
+const killedColor = "rgba(73, 1, 1, 0.6)";
+
+
+const ship1 = document.querySelector(".ship1");
+const ship2 = document.querySelector(".ship2");
+const ship3 = document.querySelector(".ship3");
+const ship4 = document.querySelector(".ship4");
+
+const resetButton = document.getElementById("resetButton");
+const autoFillButton = document.getElementById("autoFillButton");
+
+
 let ship1comp = {
     length: 4,
     quantity: 1,
@@ -326,11 +339,12 @@ function fillField(ship, player) {
                 const elem = document.getElementById(`${id}`);
                 const img = document.createElement('img');
                 img.src = ship.image;
+                elem.appendChild(img);
+                const imgstyle = getComputedStyle(img);
                 img.style.position = "absolute";
-                img.style.top = `${y * 55 + 12 - y * 2}px`;
+                img.style.top = `${y * 53 + 25 - parseFloat(imgstyle.height) / 2}px`;
                 img.style.left = `${x * 55 - x * 2}px`;
                 img.style.width = `${ship.width}px`;
-                elem.appendChild(img);
             }
 
             for (let i = 0; i < ship.length; i++) {
@@ -349,7 +363,7 @@ function fillField(ship, player) {
                 img.src = ship.image;
                 img.style.position = "absolute";
                 img.style.top = `${y * 53}px`;
-                img.style.left = `${x * 53 + 26 + parseFloat(imgstyle.height) / 2}px`;
+                img.style.left = `${x * 53 + 27 + parseFloat(imgstyle.height) / 2}px`;
                 img.style.width = `${ship.width}px`;
                 img.style.transform = "rotate(90deg)";
                 img.style.transformOrigin = "0% 0%";
@@ -365,14 +379,12 @@ function fillField(ship, player) {
     ship.quantity = quantity;
 }
 
-const autoFillButton = document.getElementById("autoFillButton");
-const autoFillButton2 = document.getElementById("autoFillButton2");
+
 autoFillButton.addEventListener('click', autofill);
-autoFillButton2.addEventListener('click', autofill);
 
 function autofill(e) {
     let temp = 0;
-    if (e.target == autoFillButton) {
+    if (!e) {
         temp = document.querySelector('.field1');
 
         field1 = [
@@ -393,9 +405,7 @@ function autofill(e) {
         fillField(ship3comp, 'comp');
         fillField(ship4comp, 'comp');
 
-        autoFillButton.classList.add("inactive");
-
-    } else if (e.target == autoFillButton2) {
+    } else if (e.target == autoFillButton) {
         temp = document.querySelector('.field2');
 
         fillField(ship1user, 'user');
@@ -403,14 +413,16 @@ function autofill(e) {
         fillField(ship3user, 'user');
         fillField(ship4user, 'user');
 
-        autoFillButton2.classList.add("inactive");
+        // autoFillButton.classList.add("inactive");
 
     }
 
+    /*
     const table = temp.getElementsByTagName("td");
     for (let i = 0; i < table.length; i++) {
         table[i].style.backgroundColor = "rgb(116, 183, 238, 0.5)";
     };
+    */
 
     console.log(field1);
     countUpdate();
@@ -447,6 +459,8 @@ function autofill(e) {
 
 }
 
+
+
 let fieldDisplay2 = document.querySelector(".field2");
 ship1user.display = document.querySelector(".ship1-table.active");
 ship2user.display = document.querySelector(".ship2-table.active");
@@ -477,6 +491,8 @@ function countUpdate() {
     count3.textContent = `x ${ship3user.quantity}`;
     count4.textContent = `x ${ship4user.quantity}`;
 }
+
+autofill();
 
 ship1user.display.addEventListener('contextmenu', horVertChange);
 ship2user.display.addEventListener('contextmenu', horVertChange);
@@ -570,10 +586,8 @@ function drop(e) {
         let y = parseInt(indexes[0]);
         let x = parseInt(indexes[1]);
         if (dragPoint.closest(".ship-table-hor")) {
-            // e.target.style.backgroundColor = "#ccc";
             if (dragPoint.classList.contains("part02")) {
                 x -= 1;
-                // field2[y][x - 1] = 1;
             } else if (dragPoint.classList.contains("part03")) {
                 x -= 2;
             } else if (dragPoint.classList.contains("part04")) {
@@ -581,19 +595,16 @@ function drop(e) {
             }
             dragPoint = null;
             if (checkHorPath(x, y, currentShip, field2)) {
-                const style = getComputedStyle(e.target);
-                console.log(style);
-                console.log(style.y);
                 const id = `${y}` + `${x}`;
                 const elem = document.getElementById(`${id}`);
                 const img = document.createElement('img');
                 img.src = currentShip.image;
+                elem.appendChild(img);
+                const imgstyle = getComputedStyle(img);
                 img.style.position = "absolute";
-                img.style.top = `${y * 54 + 10 - y}px`;
+                img.style.top = `${y * 53 + 25 - parseFloat(imgstyle.height) / 2}px`;
                 img.style.left = `${x * 55 - x * 2}px`;
                 img.style.width = `${currentShip.width}px`;
-                elem.appendChild(img);
-
 
                 for (let i = 0; i < shiplength; i++) {
                     field2[y][x + i] = 1;
@@ -605,7 +616,6 @@ function drop(e) {
         } else if (dragPoint.closest(".ship-table-vert")) {
             if (dragPoint.classList.contains("part02")) {
                 y -= 1;
-                // field2[y][x - 1] = 1;
             } else if (dragPoint.classList.contains("part03")) {
                 y -= 2;
             } else if (dragPoint.classList.contains("part04")) {
@@ -616,12 +626,12 @@ function drop(e) {
                 const id = `${y}` + `${x}`;
                 const elem = document.getElementById(`${id}`);
                 const img = document.createElement('img');
+                img.src = currentShip.image;
                 elem.appendChild(img);
                 const imgstyle = getComputedStyle(img);
-                img.src = currentShip.image;
                 img.style.position = "absolute";
                 img.style.top = `${y * 53}px`;
-                img.style.left = `${x * 53 + 26 + parseFloat(imgstyle.height) / 2}px`;
+                img.style.left = `${x * 53 + 27 + parseFloat(imgstyle.height) / 2}px`;
                 img.style.width = `${currentShip.width}px`;
                 img.style.transform = "rotate(90deg)";
                 img.style.transformOrigin = "0% 0%";
@@ -655,6 +665,10 @@ function drop(e) {
         */
 
     }
+}
+
+function addShipPictureHor() {
+
 }
 
 
