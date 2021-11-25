@@ -77,7 +77,7 @@ function startBattle() {
         }
     }
 
-
+    const woundedShipDetected = false;
 
     function compShoot() {
         enemyfield.classList.remove("red-border");
@@ -85,7 +85,15 @@ function startBattle() {
         //compMoveNotice();
         //setTimeout(userMoveNotice, 1500);
         setTimeout(switchPlayer, 2000);
-        setTimeout(shoot, 1500);
+
+        let firstHitCell;
+        let currentHitCell;
+
+        if (woundedShipDetected) {
+            setTimeout(shootIfWounded, 1500);
+        } else {
+            setTimeout(shoot, 1500);
+        }
         enemyfield.classList.remove("user-shoot");
 
         function shoot() {
@@ -97,12 +105,19 @@ function startBattle() {
                 field2[y][x] = 2;
                 cell.textContent = "o";
             } else if (field2[y][x] == 1) {
+                firstHitCell = [y, x];
+                currentHitCell = [y, x];
+                woundedShipDetected = true;
                 field2[y][x] = 3;
                 cell.style.backgroundColor = `${woundedColor}`;
                 killedCheck(hit, userships);
             } else if (field2[y][x] == 2 || field2[y][x] == 3) {
                 shoot();
             }
+        }
+
+        function shootIfWounded() {
+
         }
     }
 }
