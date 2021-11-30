@@ -503,7 +503,10 @@ function reset() {
 function shipsReset() {
     for (let i = 0; i < allships.length; i++) {
         allships[i].quantity = allships[i].initquantity;
-        allships[i].shot.forEach(item => { item = 0 });
+
+        for (let j = 0; j < allships[i].shot.length; j++) {
+            allships[i].shot[j] = 0;
+        };
 
         for (let j = 0; j < allships[i].items.length; j++) {
             allships[i].items[j] = [];
