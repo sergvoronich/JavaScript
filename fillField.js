@@ -50,6 +50,8 @@ let ship1comp = {
     adjacentArea: [[]],
     shot: [0],
     image: "ships_images/Battleship/ShipBattleshipHull.png",
+    gunImage: "ships_images/Battleship/WeaponBattleshipStandardGun.png",
+    gunImageVert: "ships_images/Battleship/WeaponBattleshipStandardGunVert.png",
     horiz: [],
     width: 210,
 };
@@ -99,6 +101,8 @@ let ship1user = {
     adjacentArea: [[]],
     shot: [0],
     image: "ships_images/Battleship/ShipBattleshipHull.png",
+    gunImage: "ships_images/Battleship/WeaponBattleshipStandardGun.png",
+    gunImageVert: "ships_images/Battleship/WeaponBattleshipStandardGunVert.png",
     horiz: [],
     width: 210,
 };
@@ -112,6 +116,8 @@ let ship2user = {
     adjacentArea: [[], []],
     shot: [0, 0],
     image: "ships_images/Cruiser/ShipCruiserHull.png",
+    gunImage: "ships_images/Cruiser/WeaponSubmarineStandard.png",
+    gunImageVert: "ships_images/Cruiser/WeaponSubmarineStandardVert.png",
     horiz: [],
     width: 160,
 };
@@ -125,6 +131,8 @@ let ship3user = {
     adjacentArea: [[], [], []],
     shot: [0, 0, 0],
     image: "ships_images/Destroyer/ShipDestroyerHull.png",
+    gunImage: "ships_images/Destroyer/WeaponDestroyerStandardGun.png",
+    gunImageVert: "ships_images/Destroyer/WeaponDestroyerStandardGunVert.png",
     horiz: [],
     width: 107,
 };
@@ -355,6 +363,27 @@ function fillField(ship, player) {
                 img.style.top = `${y * 53 + 25 - parseFloat(imgstyle.height) / 2}px`;
                 img.style.left = `${x * 55 - x * 2}px`;
                 img.style.width = `${ship.width}px`;
+                if (ship.gunImage) {
+                    const gun = document.createElement('img');
+                    gun.src = ship.gunImage;
+                    elem.appendChild(gun);
+                    gun.style.position = "absolute";
+                    if (ship.length == 4) {
+                        gun.style.top = `${y * 53 + 31 - parseFloat(imgstyle.height) / 2}px`;
+                        gun.style.left = `${x * 55 + 38 - x * 2}px`;
+                        gun.style.width = `${ship.width * 0.2}px`;
+                        gun.classList.add("rotate-horiz-gun");
+                    } else if (ship.length == 2) {
+                        gun.style.top = `${y * 53 + 30 - parseFloat(imgstyle.height) / 2}px`;
+                        gun.style.left = `${x * 55 + 18 - x * 2}px`;
+                        gun.style.width = `${ship.width * 0.2}px`;
+                    } else if (ship.length == 3) {
+                        gun.style.top = `${y * 53 + 32 - parseFloat(imgstyle.height) / 2}px`;
+                        gun.style.left = `${x * 55 + 33 - x * 2}px`;
+                        gun.style.width = `${ship.width * 0.2}px`;
+                        gun.classList.add("rotate-horiz-gun");
+                    }
+                }
             }
 
             for (let i = 0; i < ship.length; i++) {
@@ -377,6 +406,16 @@ function fillField(ship, player) {
                 img.style.width = `${ship.width}px`;
                 img.style.transform = "rotate(90deg)";
                 img.style.transformOrigin = "0% 0%";
+                if (ship.gunImageVert && ship.length != 2) {
+                    const gun = document.createElement('img');
+                    gun.src = ship.gunImageVert;
+                    elem.appendChild(gun);
+                    gun.style.position = "absolute";
+                    gun.style.top = `${y * 53 + 51 - parseFloat(imgstyle.height) / 2}px`;
+                    gun.style.left = `${x * 55 + 17 - x * 2}px`;
+                    gun.style.width = `${ship.width * 0.1}px`;
+                    gun.classList.add("rotate-vert-gun");
+                }
             }
             for (let i = 0; i < ship.length; i++) {
                 field[y + i][x] = 1;
@@ -615,6 +654,18 @@ function drop(e) {
                 img.style.top = `${y * 53 + 25 - parseFloat(imgstyle.height) / 2}px`;
                 img.style.left = `${x * 55 - x * 2}px`;
                 img.style.width = `${currentShip.width}px`;
+                if (currentShip.gunImage) {
+                    const gun = document.createElement('img');
+                    gun.src = currentShip.gunImage;
+                    elem.appendChild(gun);
+                    gun.style.position = "absolute";
+                    gun.style.top = `${y * 53 + 31 - parseFloat(imgstyle.height) / 2}px`;
+                    gun.style.left = `${x * 55 + 38 - x * 2}px`;
+                    gun.style.width = `${currentShip.width * 0.2}px`;
+                    gun.classList.add("rotate-horiz-gun");
+                    //setTimeout(() => { gun.classList.remove("rotate-horiz-gun"); }, 2000);
+                    //setTimeout(() => { gun.classList.add("shoot-horiz-gun"); }, 2000);
+                }
 
                 for (let i = 0; i < shiplength; i++) {
                     field2[y][x + i] = 1;
@@ -645,6 +696,16 @@ function drop(e) {
                 img.style.width = `${currentShip.width}px`;
                 img.style.transform = "rotate(90deg)";
                 img.style.transformOrigin = "0% 0%";
+                if (currentShip.gunImageVert) {
+                    const gun = document.createElement('img');
+                    gun.src = currentShip.gunImageVert;
+                    elem.appendChild(gun);
+                    gun.style.position = "absolute";
+                    gun.style.top = `${y * 53 + 51 - parseFloat(imgstyle.height) / 2}px`;
+                    gun.style.left = `${x * 55 + 17 - x * 2}px`;
+                    gun.style.width = `${currentShip.width * 0.1}px`;
+                    gun.classList.add("rotate-vert-gun");
+                }
 
                 for (let i = 0; i < shiplength; i++) {
                     field2[y + i][x] = 1;

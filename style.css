@@ -239,3 +239,20 @@ button:active {
     height  : 100%;
 
 }
+
+.rotate-horiz-gun {
+    transform       : rotate(360deg);
+    transition      : transform 2s;
+    transform-origin: 70% 50%;
+}
+
+.rotate-vert-gun {
+    transform       : rotate(360deg);
+    transition      : transform 2s;
+    transform-origin: 50% 70%;
+}
+
+.shoot-horiz-gun {
+    transform : translateX(-10px);
+    transition: transform 1s cubic-bezier(0.1, -0.6, 0.2, 0);
+}
