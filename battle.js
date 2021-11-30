@@ -6,6 +6,7 @@ let userfield = document.querySelector(".field2");
 let woundedShipDetected = false;
 let firstHitCell = [];
 let currentHitCell = [];
+let shootAllowed = false;
 
 function startBattle() {
     console.log('Battle started!');
@@ -17,7 +18,7 @@ function startBattle() {
     }
 
 
-
+    shootAllowed = true;
     let currentField = field1;
     let shotCompShip = [];
     let shotUserShip = [];
@@ -27,11 +28,11 @@ function startBattle() {
     userShoot();
 
     function switchPlayer() {
-        if (toggle == 1) {
+        if (toggle == 1 && shootAllowed) {
             currentField = field1;
             toggle = 2;
             userShoot();
-        } else if (toggle == 2) {
+        } else if (toggle == 2 && shootAllowed) {
             currentField = field2;
             toggle = 1;
             compShoot();
@@ -403,6 +404,7 @@ function endGameCheck() {
 }
 
 function endGame(winner) {
+    shootAllowed = false;
     let winOrLoose;
     if (winner == "user") {
         winOrLoose = "Вы выиграли!"
@@ -438,6 +440,7 @@ function endGame(winner) {
 
     function closeBlock() {
         endGameBlock.remove();
+        endGameBlockBack.remove();
         reset();
     }
 }
