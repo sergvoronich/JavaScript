@@ -1,7 +1,9 @@
 const allships = [ship1comp, ship2comp, ship3comp, ship4comp, ship1user, ship2user, ship3user, ship4user];
 const compships = [ship1comp, ship2comp, ship3comp, ship4comp];
 const userships = [ship1user, ship2user, ship3user, ship4user];
-let woundedShipDetected = "no";
+let enemyfield = document.querySelector(".field1");
+let userfield = document.querySelector(".field2");
+let woundedShipDetected = false;
 let firstHitCell = [];
 let currentHitCell = [];
 
@@ -15,8 +17,7 @@ function startBattle() {
     }
 
 
-    let enemyfield = document.querySelector(".field1");
-    let userfield = document.querySelector(".field2");
+
     let currentField = field1;
     let shotCompShip = [];
     let shotUserShip = [];
@@ -92,7 +93,7 @@ function startBattle() {
 
         let counter = 0;
 
-        if (woundedShipDetected == "yes" && level == 2) {
+        if (woundedShipDetected && level == 2) {
             setTimeout(shootIfWounded, 1500);
         } else {
             setTimeout(shoot, 1500);
@@ -115,7 +116,7 @@ function startBattle() {
                 firstHitCell.push(x);
                 currentHitCell.push(y);
                 currentHitCell.push(x);
-                woundedShipDetected = "yes";
+                woundedShipDetected = true;
                 console.log("Выполняется функция shoot");
                 field2[y][x] = 3;
                 cell.style.backgroundColor = `${woundedColor}`;
@@ -235,13 +236,13 @@ function killedCheck(hit, ships) {
                             cell.textContent = "o";
                         }
                     }
-                    woundedShipDetected = "no";
-                    console.log("Вот тут его не должно быть!");
+                    woundedShipDetected = false;
                     paintKilledShip(ship, ships);
                 }
             }
         }
     }
+    endGameCheck();
 }
 
 function paintKilledShip(ship, ships) {
@@ -377,7 +378,159 @@ function readyToBattleCheck() {
 }
 
 
+function endGameCheck() {
+    let liveUserShips = 0;
+    let liveCompShips = 0;
+    for (let i = 0; i < userships.length; i++) {
+        for (let j = 0; j < userships[i].shot.length; j++) {
+            if (userships[i].shot[j] != "killed") {
+                liveUserShips++;
+            }
+        }
+    }
 
+    for (let i = 0; i < compships.length; i++) {
+        for (let j = 0; j < compships[i].shot.length; j++) {
+            if (compships[i].shot[j] != "killed") {
+                liveCompShips++;
+            }
+        }
+    }
+
+    if (liveCompShips === 0) endGame("user");
+    if (liveUserShips === 0) endGame("comp");
+
+}
+
+function endGame(winner) {
+    let winOrLoose;
+    if (winner == "user") {
+        winOrLoose = "Вы выиграли!"
+    } else if (winner == "comp") {
+        winOrLoose = "Вы проиграли!"
+    }
+
+    const endGameBlockBack = document.createElement("div");
+    endGameBlockBack.classList.add("end-game-background");
+    const endGameBlock = document.createElement("div");
+    endGameBlock.insertAdjacentHTML("afterbegin", `<p class="win-or-loose-text">${winOrLoose}</p>`)
+    const button1 = document.createElement("button");
+    button1.setAttribute("type", "button");
+    button1.textContent = "PLAY AGAIN";
+    button1.classList.add("end-game-button");
+    button1.classList.add("play-again");
+    endGameBlock.appendChild(button1);
+    const button2 = document.createElement("button");
+    button2.setAttribute("type", "button");
+    button2.textContent = "MAIN MENU";
+    button2.classList.add("end-game-button");
+    button2.classList.add("main-menu");
+    endGameBlock.appendChild(button2);
+    console.log(endGameBlock);
+
+    endGameBlock.classList.add("end-game-block");
+    document.body.appendChild(endGameBlockBack);
+    endGameBlockBack.appendChild(endGameBlock);
+    setTimeout(() => { endGameBlock.classList.add("move-down"); }, 10);
+
+
+    button1.addEventListener("click", closeBlock);
+
+    function closeBlock() {
+        endGameBlock.remove();
+        reset();
+    }
+}
+
+function reset() {
+    field1 = [
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+    ];
+
+    field2 = [
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+    ];
+
+    const table1 = document.querySelector('.field1');
+    const table2 = document.querySelector('.field2');
+    const table1cells = table1.getElementsByTagName("td");
+    const table2cells = table2.getElementsByTagName("td");
+    const table1images = [...table1.getElementsByTagName("img")];
+    const table2images = [...table2.getElementsByTagName("img")];
+    table1images.forEach(element => {
+        element.remove();
+    });
+    table2images.forEach(element => {
+        element.remove();
+    });
+
+    for (let i = 0; i < table1cells.length; i++) {
+        table1cells[i].style.backgroundColor = "";
+        table2cells[i].style.backgroundColor = "";
+        table1cells[i].style.backgroundColor = `${mainColor}`;
+        table2cells[i].style.backgroundColor = `${mainColor}`;
+        table1cells[i].textContent = "";
+        table2cells[i].textContent = "";
+    };
+
+    shipsReset();
+
+    autofill();
+
+}
+
+function shipsReset() {
+    for (let i = 0; i < allships.length; i++) {
+        allships[i].quantity = allships[i].initquantity;
+        allships[i].shot.forEach(item => { item = 0 });
+
+        for (let j = 0; j < allships[i].items.length; j++) {
+            allships[i].items[j] = [];
+        }
+
+        for (let j = 0; j < allships[i].adjacentArea.length; j++) {
+            allships[i].adjacentArea[j] = [];
+        }
+
+        allships[i].adjacentArea.length = allships[i].items.length;
+        allships[i].horiz = [];
+    }
+    enemyfield.classList.remove("red-border");
+    userfield.classList.remove("red-border");
+    resetButton.classList.remove("inactive");
+    startButton.classList.remove("inactive");
+    autoFillButton.classList.remove("inactive");
+    console.log(ship1comp);
+    console.log(ship3user);
+    ship1.classList.remove("inactive");
+    ship2.classList.remove("inactive");
+    ship3.classList.remove("inactive");
+    ship4.classList.remove("inactive");
+}
+
+//endGame("user");
+//endGame("comp");
+
+//const testButton = document.querySelector(".test-reset");
+//testButton.addEventListener('click', reset);
 
 document.addEventListener('shipsfilled', shipsFilledCheck);
 //document.addEventListener('ready_to_battle', startBattle);

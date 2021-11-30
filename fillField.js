@@ -28,6 +28,7 @@ let field2 = [
 
 
 let level = 2;
+const mainColor = "rgba(116, 183, 238, 0.6);";
 const woundedColor = "rgba(218, 136, 126, 0.6)";
 const killedColor = "rgba(73, 1, 1, 0.6)";
 
@@ -43,6 +44,7 @@ const autoFillButton = document.getElementById("autoFillButton");
 
 let ship1comp = {
     length: 4,
+    initquantity: 1,
     quantity: 1,
     items: [[]],
     adjacentArea: [[]],
@@ -54,6 +56,7 @@ let ship1comp = {
 
 let ship2comp = {
     length: 3,
+    initquantity: 2,
     quantity: 2,
     items: [[], []],
     adjacentArea: [[], []],
@@ -65,6 +68,7 @@ let ship2comp = {
 
 let ship3comp = {
     length: 2,
+    initquantity: 3,
     quantity: 3,
     items: [[], [], []],
     adjacentArea: [[], [], []],
@@ -76,6 +80,7 @@ let ship3comp = {
 
 let ship4comp = {
     length: 1,
+    initquantity: 4,
     quantity: 4,
     items: [[], [], [], []],
     adjacentArea: [[], [], [], []],
@@ -87,6 +92,7 @@ let ship4comp = {
 
 let ship1user = {
     length: 4,
+    initquantity: 1,
     quantity: 1,
     display: null,
     items: [[]],
@@ -99,6 +105,7 @@ let ship1user = {
 
 let ship2user = {
     length: 3,
+    initquantity: 2,
     quantity: 2,
     display: null,
     items: [[], []],
@@ -111,6 +118,7 @@ let ship2user = {
 
 let ship3user = {
     length: 2,
+    initquantity: 3,
     quantity: 3,
     display: null,
     items: [[], [], []],
@@ -123,6 +131,7 @@ let ship3user = {
 
 let ship4user = {
     length: 1,
+    initquantity: 4,
     quantity: 4,
     display: null,
     items: [[], [], [], []],
@@ -136,7 +145,7 @@ let ship4user = {
 
 function checkVertPath(x, y, ship, field) {
     let errors = 0;
-    if ((y + ship.length) < field.length && field[y][x] != 1) {
+    if ((y + ship.length) <= field.length && field[y][x] != 1) {
         for (let i = 0; i < ship.length; i++) {
             if (y === 0) {
                 if (x === 0) {
@@ -162,7 +171,7 @@ function checkVertPath(x, y, ship, field) {
                         errors += 1;
                     }
                 }
-            } else if (y === 9) {
+            } else if (y + i === 9) {
                 if (x === 0) {
                     // проверки нижнего левого угла
                     if (field[y + i - 1][x] != 1 && field[y + i - 1][x + 1] != 1 && field[y + i][x + 1] != 1) {
@@ -668,9 +677,7 @@ function drop(e) {
     }
 }
 
-function addShipPictureHor() {
 
-}
 
 
 
