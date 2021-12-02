@@ -31,11 +31,11 @@ function startBattle() {
         if (toggle == 1 && shootAllowed) {
             currentField = field1;
             toggle = 2;
-            userShoot();
+            setTimeout(userShoot, 500);
         } else if (toggle == 2 && shootAllowed) {
             currentField = field2;
             toggle = 1;
-            compShoot();
+            setTimeout(compShoot, 500);
         }
     }
 
@@ -47,6 +47,7 @@ function startBattle() {
 
         function userShootCapture(e) {
             if (e.target.tagName == "TD") {
+                setTimeout(switchPlayer, 1500);
                 let id = e.target.getAttribute("id");
                 let indexes = id.substr(0, 2);
                 let hitString = indexes.split('');
@@ -54,29 +55,29 @@ function startBattle() {
                 let y = parseInt(hitString[0]);
                 let x = parseInt(hitString[1]);
                 let hit = [y, x];
+                const elem = document.getElementById(`${id}`);
+                let top = `${y * 53}px`;
+                let left = `${x * 53}px`;
+                createExplosion(top, left, elem);
+                shootAnim();
 
                 if (currentField[y][x] == 0) {
                     currentField[y][x] = 2;
-                    e.target.textContent = "o";
+                    setTimeout(() => { e.target.textContent = "o"; }, 1000);
                     // e.target.style.backgroundColor = "rgb(15, 140, 243)";
                     console.log(hit);
                     enemyfield.removeEventListener('click', userShootCapture);
-                    switchPlayer();
                 } else if (currentField[y][x] == 1) {
                     currentField[y][x] = 3;
-                    e.target.style.backgroundColor = `${woundedColor}`;
-                    //const img = document.createElement('img');
-                    //img.src = "/ships_images/fire.gif";
-                    //img.style.position = "absolute";
-                    //img.style.top = `0`;
-                    //img.style.left = `0`;
-                    //img.style.width = `45px`;
-                    //e.target.appendChild(img);
-                    //e.target.style.border = "2px dashed black";
-                    // shotCompShip.push(hit);
-                    killedCheck(hit, compships);
+                    // вставка огня
+                    top = `${y * 53}px`;
+                    left = `${x * 53 + 14}px`;
+                    setTimeout(() => {
+                        e.target.style.backgroundColor = `${woundedColor}`;
+                        createFire(top, left, elem);
+                        killedCheck(hit, compships);
+                    }, 1000);
                     enemyfield.removeEventListener('click', userShootCapture);
-                    switchPlayer();
                 }
             }
         }
@@ -95,9 +96,9 @@ function startBattle() {
         let counter = 0;
 
         if (woundedShipDetected && level == 2) {
-            setTimeout(shootIfWounded, 1500);
+            shootIfWounded();
         } else {
-            setTimeout(shoot, 1500);
+            shoot();
         }
 
         enemyfield.classList.remove("user-shoot");
@@ -109,7 +110,14 @@ function startBattle() {
             const cell = document.getElementById(`${y}${x}`);
             if (field2[y][x] == 0) {
                 field2[y][x] = 2;
-                cell.textContent = "o";
+                let top = `${y * 53}px`;
+                let left = `${x * 53}px`;
+                setTimeout(() => {
+                    createExplosion(top, left, cell);
+                    shootAnim();
+                }, 500);
+                //cell.textContent = "o";
+                setTimeout(() => { cell.textContent = "o"; }, 1500);
             } else if (field2[y][x] == 1) {
                 firstHitCell = [];
                 currentHitCell = [];
@@ -118,10 +126,20 @@ function startBattle() {
                 currentHitCell.push(y);
                 currentHitCell.push(x);
                 woundedShipDetected = true;
-                console.log("Выполняется функция shoot");
                 field2[y][x] = 3;
-                cell.style.backgroundColor = `${woundedColor}`;
-                killedCheck(hit, userships);
+                let top = `${y * 53}px`;
+                let left = `${x * 53}px`;
+                setTimeout(() => {
+                    createExplosion(top, left, cell);
+                    shootAnim();
+                }, 500);
+                setTimeout(() => {
+                    cell.style.backgroundColor = `${woundedColor}`;
+                    top = `${y * 53}px`;
+                    left = `${x * 53 + 14}px`;
+                    createFire(top, left, cell);
+                    killedCheck(hit, userships);
+                }, 1500)
             } else if (field2[y][x] == 2 || field2[y][x] == 3) {
                 shoot();
             }
@@ -148,20 +166,37 @@ function startBattle() {
             if (x > 9 || y > 9 || x < 0 || y < 0) {
                 shootIfWounded();
             } else {
-                let hit2 = [y, x];
+                let hit = [y, x];
                 console.log(currentHitCell);
-                console.log(hit2);
-
+                console.log(hit);
                 const cell = document.getElementById(`${y}${x}`);
                 if (field2[y][x] == 0) {
                     field2[y][x] = 2;
-                    cell.textContent = "o";
+                    //cell.textContent = "o";
+                    let top = `${y * 53}px`;
+                    let left = `${x * 53}px`;
+                    setTimeout(() => {
+                        createExplosion(top, left, cell);
+                        shootAnim();
+                    }, 500);
+                    setTimeout(() => { cell.textContent = "o"; }, 1500);
                     counter = 0;
                 } else if (field2[y][x] == 1) {
                     currentHitCell = [y, x];
                     field2[y][x] = 3;
-                    cell.style.backgroundColor = `${woundedColor}`;
-                    killedCheck(hit2, userships);
+                    let top = `${y * 53}px`;
+                    let left = `${x * 53}px`;
+                    setTimeout(() => {
+                        createExplosion(top, left, cell);
+                        shootAnim();
+                    }, 500);
+                    setTimeout(() => {
+                        cell.style.backgroundColor = `${woundedColor}`;
+                        top = `${y * 53}px`;
+                        left = `${x * 53 + 14}px`;
+                        createFire(top, left, cell);
+                        killedCheck(hit, userships);
+                    }, 1500)
                     counter = 0;
                 } else if (field2[y][x] == 2 || field2[y][x] == 3) {
                     counter++;
@@ -404,6 +439,11 @@ function endGameCheck() {
 }
 
 function endGame(winner) {
+    music1.currentTime = 0;
+    music1.pause();
+    music2.play();
+    music2.volume = 0.3;
+    music2.loop = true;
     shootAllowed = false;
     let winOrLoose;
     if (winner == "user") {
@@ -441,6 +481,9 @@ function endGame(winner) {
     function closeBlock() {
         endGameBlock.remove();
         endGameBlockBack.remove();
+        music2.currentTime = 0;
+        music2.pause();
+        music1.play();
         reset();
     }
 }
@@ -530,6 +573,97 @@ function shipsReset() {
     ship2.classList.remove("inactive");
     ship3.classList.remove("inactive");
     ship4.classList.remove("inactive");
+}
+
+// функция создания анимации горящего огня для раненых кораблей
+function createFire(top, left, elem) {
+    let timer;
+    let counter = 0;
+    let xInit = -14;
+    let yInit = -5;
+    let xShift = 0;
+    let yShift = 0;
+    let fireImage = 'images/fire4_64.png';
+    const container = document.createElement("div");
+    container.classList.add("fire-container");
+    elem.appendChild(container);
+    timer = requestAnimationFrame(fireAmin);
+    container.style.backgroundImage = `url("${fireImage}")`;
+    container.style.top = `${top}`;
+    container.style.left = `${left}`;
+
+    function fireAmin() {
+        cancelAnimationFrame(timer);
+        if (counter === 60 || counter === 0) {
+            counter = 0;
+            xShift = 0;
+            yShift = 0;
+        } else if (counter % 10 === 0) {
+            xShift = 0;
+            yShift -= 50;
+        } else {
+            xShift -= 50;
+        }
+        counter++;
+        container.style.backgroundPosition = `${xInit + xShift}px ${yInit + yShift}px`;
+        timer = requestAnimationFrame(fireAmin);
+    }
+}
+
+function createExplosion(top, left, elem) {
+    let timer;
+    let counter = 0;
+    let xInit = -8;
+    let yInit = -20;
+    let xShift = 0;
+    let yShift = 0;
+    let explosionImage = 'images/boom3.png';
+    //let startTime;
+    const container = document.createElement("div");
+    container.classList.add("explosion-container");
+    elem.appendChild(container);
+    timer = requestAnimationFrame(explosionAnim);
+    container.style.backgroundImage = `url("${explosionImage}")`;
+    container.style.backgroundPosition = `${xInit + xShift}px ${yInit + yShift}px`;
+    container.style.top = `${top}`;
+    container.style.left = `${left}`;
+
+    function explosionAnim() {
+        //if (!startTime) startTime = timestamp;
+        // это то время, которое прошло с первого вызова функции до сейчас 
+        //var progress = timestamp - startTime;
+        cancelAnimationFrame(timer);
+        //if (progress > 0) {
+        if (counter % 8 === 0) {
+            xShift = 0;
+            yShift -= 62.5;
+        } else {
+            xShift -= 62.5;
+        }
+        container.style.backgroundPosition = `${xInit + xShift}px ${yInit + yShift}px`;
+        //startTime = null;
+        //}
+        if (counter != 64) {
+            timer = requestAnimationFrame(explosionAnim);
+        } else {
+            container.remove();
+        }
+        counter++;
+    }
+}
+
+
+function shootAnim() {
+    let number = Math.floor(Math.random() * 3);
+    console.log(number);
+
+    if (number == 0) {
+        boom1.play();
+    } else if (number == 1) {
+        boom2.play();
+    } else if (number == 2) {
+        boom3.play();
+    }
 }
 
 //endGame("user");

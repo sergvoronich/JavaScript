@@ -32,6 +32,19 @@ const mainColor = "rgba(116, 183, 238, 0.6);";
 const woundedColor = "rgba(218, 136, 126, 0.6)";
 const killedColor = "rgba(73, 1, 1, 0.6)";
 
+const boom1 = new Audio();
+boom1.src = "sounds/boom1.mp3";
+const boom2 = new Audio();
+boom2.src = "sounds/boom2.mp3";
+const boom3 = new Audio();
+boom3.src = "sounds/boom3.mp3";
+
+const music1 = new Audio();
+music1.src = "sounds/muzyka_dlya_bitv.mp3";
+const music2 = new Audio();
+music2.src = "sounds/morskoe_srazhenie.mp3";
+
+
 
 const ship1 = document.querySelector(".ship1");
 const ship2 = document.querySelector(".ship2");
@@ -478,6 +491,13 @@ function autofill(e) {
 
     const shipsfilled = new Event('shipsfilled');
     document.dispatchEvent(shipsfilled);
+
+
+    document.addEventListener('DOMContentLoaded', () => {
+        music1.play();
+        music1.volume = 0.3;
+        music1.loop = true;
+    });
 
     /*
     for (let i = 0; i < field1.length; i++) {
