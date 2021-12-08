@@ -44,7 +44,7 @@ music1.src = "sounds/muzyka_dlya_bitv.mp3";
 const music2 = new Audio();
 music2.src = "sounds/morskoe_srazhenie.mp3";
 
-
+let readytoPlay = false;
 
 const ship1 = document.querySelector(".ship1");
 const ship2 = document.querySelector(".ship2");
@@ -492,13 +492,6 @@ function autofill(e) {
     const shipsfilled = new Event('shipsfilled');
     document.dispatchEvent(shipsfilled);
 
-
-    document.addEventListener('DOMContentLoaded', () => {
-        music1.play();
-        music1.volume = 0.3;
-        music1.loop = true;
-    });
-
     /*
     for (let i = 0; i < field1.length; i++) {
         for (let j = 0; j < field1[0].length; j++) {
@@ -757,6 +750,27 @@ function drop(e) {
 
     }
 }
+
+let timer;
+
+
+function playMusic() {
+    clearInterval(timer);
+    if (readytoPlay == true) {
+        music1.play();
+        music1.volume = 0.3;
+        music1.loop = true;
+    } else {
+        timer = setInterval(playMusic, 5000);
+    }
+}
+
+function startPlayMusic() {
+    readytoPlay = true;
+}
+
+playMusic();
+document.addEventListener('click', startPlayMusic);
 
 
 

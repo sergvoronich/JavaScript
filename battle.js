@@ -7,6 +7,7 @@ let woundedShipDetected = false;
 let firstHitCell = [];
 let currentHitCell = [];
 let shootAllowed = false;
+let musicIsOn = true;
 
 function startBattle() {
     console.log('Battle started!');
@@ -666,6 +667,16 @@ function shootAnim() {
     }
 }
 
+function mute() {
+    if (musicIsOn) {
+        music1.volume = 0;
+        musicIsOn = false;
+    } else {
+        music1.volume = 0.3;
+        musicIsOn = true;
+    }
+}
+
 //endGame("user");
 //endGame("comp");
 
@@ -678,7 +689,8 @@ document.addEventListener('shipsfilled', shipsFilledCheck);
 const startButton = document.getElementById("startButton");
 startButton.addEventListener('click', readyToBattleCheck);
 
-
+const muteButton = document.querySelector(".mute-button");
+muteButton.addEventListener('click', mute);
 
 
 

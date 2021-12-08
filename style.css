@@ -14,9 +14,9 @@ body::before {
     top                : 0;
     width              : 100%;
     height             : 100%;
-    opacity            : 0.8;
+    opacity            : 0.9;
     background-image   : url("images/background.jpg");
-    background-repeat  : no-repeat;
+    background-repeat  : repeat;
     background-position: 50% 0;
     background-size    : cover;
     z-index            : -1;
@@ -26,14 +26,15 @@ td {
     min-width       : 50px;
     height          : 50px;
     border          : 1px solid rgb(0, 0, 0, 0.3);
-    background-color: rgba(116, 183, 238, 0.6);
+    background-color: rgba(116, 183, 238, 0.8);
     text-align      : center;
     font-family     : Arial, Helvetica, sans-serif;
     font-weight     : bold;
 }
 
 .wrapper {
-    display: flex;
+    display   : flex;
+    margin-top: 20px;
 }
 
 .field1 {
@@ -54,6 +55,10 @@ table {
     border         : 2px solid black;
     border-spacing : 0;
     border-collapse: collapse;
+}
+
+button:hover {
+    cursor: pointer;
 }
 
 .user-shoot:hover {
@@ -140,7 +145,7 @@ button {
     font-family     : Georgia, 'Times New Roman', Times, serif;
     width           : 100px;
     height          : 40px;
-    opacity         : 70%;
+    opacity         : 80%;
 }
 
 #startButton {
@@ -277,4 +282,82 @@ button:active {
     background-size  : 500px;
     background-repeat: no-repeat;
     z-index          : 2;
+}
+
+.navigation {
+    display: flex;
+}
+
+.mute-button {
+    width              : 50px;
+    height             : 50px;
+    padding            : 5px;
+    background-image   : url('images/mute-button.png');
+    background-position: center;
+    background-size    : 30px;
+    background-repeat  : no-repeat;
+    background-color   : white;
+}
+
+.menu {
+    position                                          : absolute;
+    display                                           : flex;
+    flex-wrap                                         : wrap;
+    top                                               : 350px;
+    left                                              : 33%;
+    width                                             : 600px;
+    min-height                                        : 330px;
+    padding                                           : 20px;
+    /*background-color                                : rgba(167, 183, 185, 0.7);*/
+    border                                            : 8px double;
+    border-radius                                     : 5px;
+    box-shadow                                        : 10px 10px 10px black;
+    z-index                                           : 4;
+    justify-content                                   : space-around;
+    /* Permalink - use to edit and share this gradient: https://colorzilla.com/gradient-editor/#000000+0,000000+100&0.65+0,0+100;Neutral+Density */
+    background                                        : -moz-linear-gradient(45deg, rgba(0, 0, 0, 0.65) 0%, rgba(0, 0, 0, 0) 100%);
+    /* FF3.6-15 */
+    background                                        : -webkit-linear-gradient(45deg, rgba(0, 0, 0, 0.65) 0%, rgba(0, 0, 0, 0) 100%);
+    /* Chrome10-25,Safari5.1-6 */
+    background                                        : linear-gradient(45deg, rgba(0, 0, 0, 0.65) 0%, rgba(0, 0, 0, 0) 100%);
+    /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+    filter                                            : progid:DXImageTransform.Microsoft.gradient(startColorstr='#a6000000', endColorstr='#00000000', GradientType=1);
+    /* IE6-9 fallback on horizontal gradient */
+}
+
+.menu p {
+    width      : 100%;
+    font-size  : 20px;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    color      : white;
+}
+
+
+.menu button {
+    display    : block;
+    min-width  : 200px;
+    max-width  : 200px;
+    height     : 100px;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    font-size  : 30px;
+    margin     : 30px;
+    padding    : 10px;
+    opacity    : 0.9;
+}
+
+.menu button:hover {
+    background-color: rgb(195, 205, 50);
+}
+
+.name {
+    position           : absolute;
+    width              : 800px;
+    height             : 200px;
+    z-index            : 5;
+    top                : 50px;
+    left               : 30%;
+    background-image   : url('images/battleshiptext.png');
+    background-position: 0 -150px;
+    background-size    : 100%;
+    background-repeat  : no-repeat;
 }
