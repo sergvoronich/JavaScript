@@ -32,15 +32,16 @@ function startBattle() {
         if (toggle == 1 && shootAllowed) {
             currentField = field1;
             toggle = 2;
-            userShoot();
+            setTimeout(userShoot, 500);
         } else if (toggle == 2 && shootAllowed) {
             currentField = field2;
             toggle = 1;
-            compShoot();
+            setTimeout(compShoot, 500);
         }
     }
 
     function userShoot() {
+        let letUserShoot = true;
         userfield.classList.remove("red-border");
         enemyfield.classList.add("red-border");
         enemyfield.addEventListener('click', userShootCapture);
@@ -48,37 +49,42 @@ function startBattle() {
 
         function userShootCapture(e) {
             if (e.target.tagName == "TD") {
-                setTimeout(switchPlayer, 1500);
                 let id = e.target.getAttribute("id");
                 let indexes = id.substr(0, 2);
                 let hitString = indexes.split('');
 
                 let y = parseInt(hitString[0]);
                 let x = parseInt(hitString[1]);
-                let hit = [y, x];
-                const elem = document.getElementById(`${id}`);
-                let top = `${y * 53}px`;
-                let left = `${x * 53}px`;
-                createExplosion(top, left, elem);
-                shootAnim();
 
-                if (currentField[y][x] == 0) {
-                    currentField[y][x] = 2;
-                    setTimeout(() => { e.target.textContent = "o"; }, 1000);
-                    // e.target.style.backgroundColor = "rgb(15, 140, 243)";
-                    console.log(hit);
-                    enemyfield.removeEventListener('click', userShootCapture);
-                } else if (currentField[y][x] == 1) {
-                    currentField[y][x] = 3;
-                    // вставка огня
-                    top = `${y * 53}px`;
-                    left = `${x * 53 + 14}px`;
-                    setTimeout(() => {
-                        e.target.style.backgroundColor = `${woundedColor}`;
-                        createFire(top, left, elem);
-                        killedCheck(hit, compships);
-                    }, 1000);
-                    enemyfield.removeEventListener('click', userShootCapture);
+
+                if (currentField[y][x] != 2 && currentField[y][x] != 3 && letUserShoot) {
+                    letUserShoot = false;
+                    let hit = [y, x];
+                    setTimeout(switchPlayer, 1500);
+                    const elem = document.getElementById(`${id}`);
+                    let top = `${y * 53}px`;
+                    let left = `${x * 53}px`;
+                    createExplosion(top, left, elem);
+                    shootAnim();
+
+                    if (currentField[y][x] == 0) {
+                        currentField[y][x] = 2;
+                        setTimeout(() => { e.target.textContent = "o"; }, 1000);
+                        // e.target.style.backgroundColor = "rgb(15, 140, 243)";
+                        console.log(hit);
+                        enemyfield.removeEventListener('click', userShootCapture);
+                    } else if (currentField[y][x] == 1) {
+                        currentField[y][x] = 3;
+                        // вставка огня
+                        top = `${y * 53}px`;
+                        left = `${x * 53 + 14}px`;
+                        setTimeout(() => {
+                            e.target.style.backgroundColor = `${woundedColor}`;
+                            createFire(top, left, elem);
+                            killedCheck(hit, compships);
+                        }, 1000);
+                        enemyfield.removeEventListener('click', userShootCapture);
+                    }
                 }
             }
         }
@@ -91,7 +97,7 @@ function startBattle() {
         userfield.classList.add("red-border");
         //compMoveNotice();
         //setTimeout(userMoveNotice, 1500);
-        setTimeout(switchPlayer, 3000);
+        setTimeout(switchPlayer, 2000);
 
         let counter = 0;
 
