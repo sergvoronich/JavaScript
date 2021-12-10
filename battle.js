@@ -87,7 +87,6 @@ function startBattle() {
 
 
     function compShoot() {
-        console.log(woundedShipDetected);
         enemyfield.classList.remove("red-border");
         userfield.classList.add("red-border");
         //compMoveNotice();
