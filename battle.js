@@ -685,9 +685,11 @@ function mute() {
     if (musicIsOn) {
         music1.volume = 0;
         musicIsOn = false;
+        sessionStorage.setItem("musicIsOn", "false");
     } else {
         music1.volume = 0.3;
         musicIsOn = true;
+        sessionStorage.setItem("musicIsOn", "true");
     }
 }
 

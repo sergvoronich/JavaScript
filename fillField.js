@@ -759,10 +759,14 @@ function playMusic() {
     clearInterval(timer);
     if (readytoPlay == true) {
         music1.play();
-        music1.volume = 0.3;
+        if (sessionStorage.getItem("musicIsOn") == "false") {
+            music1.volume = 0;
+        } else {
+            music1.volume = 0.3;
+        }
         music1.loop = true;
     } else {
-        timer = setInterval(playMusic, 5000);
+        timer = setInterval(playMusic, 3000);
     }
 }
 
