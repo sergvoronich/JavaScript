@@ -138,7 +138,7 @@ button {
     margin-right    : 10px;
     margin-bottom   : 20px;
     border-radius   : 20px;
-    background-color: yellow;
+    background-color: rgb(238, 211, 59);
     font-weight     : bold;
     border          : 1px solid black;
     box-shadow      : 1px 1px 0 0;
@@ -146,6 +146,7 @@ button {
     width           : 100px;
     height          : 40px;
     opacity         : 80%;
+    transition      : background-color 0.5s;
 }
 
 #startButton {
@@ -314,10 +315,10 @@ button:active {
     position                                          : absolute;
     display                                           : flex;
     flex-wrap                                         : wrap;
-    top                                               : 350px;
-    left                                              : 33%;
+    top                                               : 35vh;
+    left                                              : 33vw;
     width                                             : 600px;
-    min-height                                        : 40vh;
+    min-height                                        : 30vh;
     padding                                           : 20px;
     /*background-color                                : rgba(167, 183, 185, 0.7);*/
     border                                            : 8px double;
@@ -364,7 +365,8 @@ button:active {
 }
 
 .menu button:hover {
-    background-color: rgb(195, 205, 50);
+    background-color: rgb(255, 236, 151);
+    transition      : background-color 0.5s;
 }
 
 .name {
@@ -402,14 +404,8 @@ button:active {
 }
 
 .menu .back-to-main-menu {
-    width           : 150px;
-    height          : 60px;
-    font-size       : 25px;
-    background-color: white;
-    transition      : background-color 0.5s;
-}
+    width    : 150px;
+    height   : 60px;
+    font-size: 25px;
 
-.menu .back-to-main-menu:hover {
-    background-color: yellow;
-    transition      : background-color 0.5s;
 }
