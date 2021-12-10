@@ -7,8 +7,34 @@
 
 <div class="name"></div>
 <div class="menu">
-    <p>GAME</p>
-    <p>SETTINGS</p>
-    <p>EXIT</p>
+    <div class="content-wrapper">
+        <div class="block level">
+            <p>LEVEL</p>
+            <select name="select-level" id="level">
+                <option value="easy">Easy</option>
+                <option value="intermediate" selected>Intermediate</option>
+                <option value="hard">Hard</option>
+            </select>
+        </div>
+        <div class="block adjacent-area">
+            <p>AREA AROUND SHIP AUTOFILL</p>
+            <input type="checkbox" checked>
+        </div>
+        <div class="block music">
+            <p>MUSIC</p>
+            <span>ON</span>
+            <input name="music-on-off" checked type="radio">
+            <span>OFF</span>
+            <input name="music-on-off" type="radio">
+        </div>
+        <div class="block sounds">
+            <p>SOUNDS</p>
+            <span>ON</span>
+            <input name="sounds-on-off" checked type="radio">
+            <span>OFF</span>
+            <input name="sounds-on-off" type="radio">
+        </div>
+    </div>
+
     <button type="button" class="back-to-main-menu">MAIN MENU</button>
 </div>

@@ -478,6 +478,8 @@ function endGame(winner) {
 
 
     button1.addEventListener("click", closeBlock);
+    button2.addEventListener("click", closeBlock);
+    button2.addEventListener("click", openpage1);
 
     function closeBlock() {
         endGameBlock.remove();
@@ -675,6 +677,36 @@ function mute() {
         music1.volume = 0.3;
         musicIsOn = true;
     }
+}
+
+const settings = {
+    level: 2,
+    adjacentAreaFill: true,
+    musicIsOn: true,
+    soundsIsOn: true
+}
+
+function checkMusicRadio() {
+    var hash = location.hash.substr(1);
+    if (hash == "SETTINGS") {
+        setTimeout(() => {
+            const block = document.querySelector(".music");
+            block.addEventListener('click', changeRadio);
+        }, 200);
+    }
+}
+
+function changeRadio() {
+    const musicRadioButton = document.querySelector(".music input");
+    const musicRadioButton2 = document.querySelector(".music input:last-child");
+    if (musicRadioButton.getAttribute('checked')) {
+        musicIsOn = true;
+        music1.volume = 0.3;
+    } else if (musicRadioButton2.getAttribute('checked')) {
+        musicIsOn = false;
+        music1.volume = 0;
+    }
+    console.log(musicRadioButton2);
 }
 
 //endGame("user");

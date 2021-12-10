@@ -127,3 +127,5 @@ function childMenu() {
 
 window.onhashchange = updatePage;
 window.addEventListener('DOMContentLoaded', updatePage);
+
+window.addEventListener('hashchange', checkMusicRadio);
