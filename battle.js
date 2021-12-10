@@ -91,7 +91,7 @@ function startBattle() {
         userfield.classList.add("red-border");
         //compMoveNotice();
         //setTimeout(userMoveNotice, 1500);
-        setTimeout(switchPlayer, 2000);
+        setTimeout(switchPlayer, 3000);
 
         let counter = 0;
 
