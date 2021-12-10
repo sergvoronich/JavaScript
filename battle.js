@@ -8,7 +8,9 @@ let firstHitCell = [];
 let currentHitCell = [];
 let shootAllowed = false;
 let musicIsOn = true;
+let soundsIsOn = true;
 
+// функция начала битвы
 function startBattle() {
     console.log('Battle started!');
 
@@ -28,6 +30,7 @@ function startBattle() {
     shipsAdjacentAreaCapture();
     userShoot();
 
+    // функция переключения хода между пользователем и компьютером
     function switchPlayer() {
         if (toggle == 1 && shootAllowed) {
             currentField = field1;
@@ -40,6 +43,7 @@ function startBattle() {
         }
     }
 
+    // функция выстрела пользователя
     function userShoot() {
         let letUserShoot = true;
         userfield.classList.remove("red-border");
@@ -91,7 +95,7 @@ function startBattle() {
     }
 
 
-
+    // функция выстрела компьютера (учитывает различные уровни сложности)
     function compShoot() {
         enemyfield.classList.remove("red-border");
         userfield.classList.add("red-border");
@@ -216,6 +220,7 @@ function startBattle() {
     }
 }
 
+// функция, проверяющая, убит ли корабль
 function killedCheck(hit, ships) {
     for (let i = 0; i < ships.length; i++) {
         for (let j = 0; j < ships[i].items.length; j++) {
@@ -287,6 +292,7 @@ function killedCheck(hit, ships) {
     endGameCheck();
 }
 
+// функция окрашивания полей убитого корабля
 function paintKilledShip(ship, ships) {
     for (let i = 0; i < ship.length; i++) {
         let x = ship[i][1];
@@ -294,13 +300,9 @@ function paintKilledShip(ship, ships) {
         if (ships.includes(ship1comp)) {
             const cell = document.getElementById(`${y}${x}comp`);
             cell.style.backgroundColor = `${killedColor}`;
-            //cell.style.border = "2px solid black";
         } else if (ships.includes(ship1user)) {
             const cell = document.getElementById(`${y}${x}`);
             cell.style.backgroundColor = `${killedColor}`;
-            //cell.style.border = "2px solid black";
-            //cell.style.backgroundColor = "rgba(21, 78, 165, 0.2)";
-            //cell.style.backgroundColor = "rgba(255, 0, 0, 0.2)";
         }
 
     }
@@ -308,7 +310,7 @@ function paintKilledShip(ship, ships) {
 
 
 
-
+// функция выведения сообщения о начале битвы
 function startBattleNotice() {
     const textContainer = document.createElement("span");
     textContainer.textContent = "Битва началась!";
@@ -323,7 +325,7 @@ function startBattleNotice() {
 
 }
 
-
+/*
 function compMoveNotice() {
     const textContainer = document.createElement("span");
     textContainer.textContent = "ХОД КОМПЬЮТЕРА";
@@ -337,7 +339,6 @@ function compMoveNotice() {
     }
 
 }
-
 function userMoveNotice() {
     const textContainer = document.createElement("span");
     textContainer.textContent = "ВАШ ХОД";
@@ -351,9 +352,9 @@ function userMoveNotice() {
     }
 
 }
+*/
 
-
-
+// функция, проверяющая, установлены ли все корабли на поле
 function shipsFilledCheck() {
     let errors = 0;
     for (let i = 0; i < allships.length; i++) {
@@ -382,7 +383,7 @@ function shipsFilledCheck() {
     }
 }
 
-
+// функция, сохраняющая информацию о соседних полях вокруг корабля
 function shipsAdjacentAreaCapture() {
     for (let i = 0; i < allships.length; i++) {
         for (let j = 0; j < allships[i].items.length; j++) {
@@ -409,6 +410,7 @@ function shipsAdjacentAreaCapture() {
     }
 }
 
+// функция проверки готовности к битве
 function readyToBattleCheck() {
     let ready = shipsFilledCheck();
     if (ready) {
@@ -419,7 +421,7 @@ function readyToBattleCheck() {
     }
 }
 
-
+// функция, проверяющая, закончилась ли игра
 function endGameCheck() {
     let liveUserShips = 0;
     let liveCompShips = 0;
@@ -444,6 +446,7 @@ function endGameCheck() {
 
 }
 
+// функция, срабатывающая, когда игра закончилась
 function endGame(winner) {
     music1.currentTime = 0;
     music1.pause();
@@ -496,6 +499,7 @@ function endGame(winner) {
     }
 }
 
+// функция обнуления полей, чтобы заново начать игру
 function reset() {
     field1 = [
         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
@@ -551,6 +555,7 @@ function reset() {
 
 }
 
+// функция восстановления исходных параметров объектов кораблей, чтобы заново начать игру
 function shipsReset() {
     for (let i = 0; i < allships.length; i++) {
         allships[i].quantity = allships[i].initquantity;
@@ -618,6 +623,7 @@ function createFire(top, left, elem) {
     }
 }
 
+// функция создания анимации взрыва
 function createExplosion(top, left, elem) {
     let timer;
     let counter = 0;
@@ -660,7 +666,7 @@ function createExplosion(top, left, elem) {
     }
 }
 
-
+// функция звука взрыва
 function shootAnim() {
     let number = Math.floor(Math.random() * 3);
     console.log(number);
@@ -674,6 +680,7 @@ function shootAnim() {
     }
 }
 
+// функция включения/выключения звука
 function mute() {
     if (musicIsOn) {
         music1.volume = 0;
@@ -689,29 +696,6 @@ const settings = {
     adjacentAreaFill: true,
     musicIsOn: true,
     soundsIsOn: true
-}
-
-function checkMusicRadio() {
-    var hash = location.hash.substr(1);
-    if (hash == "SETTINGS") {
-        setTimeout(() => {
-            const block = document.querySelector(".music");
-            block.addEventListener('click', changeRadio);
-        }, 200);
-    }
-}
-
-function changeRadio() {
-    const musicRadioButton = document.querySelector(".music input");
-    const musicRadioButton2 = document.querySelector(".music input:last-child");
-    if (musicRadioButton.getAttribute('checked')) {
-        musicIsOn = true;
-        music1.volume = 0.3;
-    } else if (musicRadioButton2.getAttribute('checked')) {
-        musicIsOn = false;
-        music1.volume = 0;
-    }
-    console.log(musicRadioButton2);
 }
 
 //endGame("user");

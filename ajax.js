@@ -70,7 +70,7 @@ function updatePage() {
                 dataType: "html",
                 success: renderNewPage
             });
-            setTimeout(mainMenu, 200);
+            setTimeout(mainMenu, 500);
             break;
         case 'hiscore':
             $.ajax(hash + '.html', {
@@ -78,7 +78,7 @@ function updatePage() {
                 dataType: "html",
                 success: renderNewPage
             })
-            setTimeout(childMenu, 200);
+            setTimeout(childMenu, 500);
             break;
         case 'rules':
             $.ajax(hash + '.html', {
@@ -86,7 +86,7 @@ function updatePage() {
                 dataType: "html",
                 success: renderNewPage
             })
-            setTimeout(childMenu, 200);
+            setTimeout(childMenu, 500);
             break;
         case 'settings':
             $.ajax(hash + '.html', {
@@ -94,7 +94,7 @@ function updatePage() {
                 dataType: "html",
                 success: renderNewPage
             })
-            setTimeout(childMenu, 200);
+            setTimeout(childMenu, 500);
             break;
         case '':
             $.ajax('index.html', {
@@ -125,7 +125,7 @@ function childMenu() {
 
 
 
+
 window.onhashchange = updatePage;
 window.addEventListener('DOMContentLoaded', updatePage);
 
-window.addEventListener('hashchange', checkMusicRadio);

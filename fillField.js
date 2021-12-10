@@ -163,7 +163,7 @@ let ship4user = {
     width: 54,
 };
 
-
+// функция, проверяющая, свободны ли ячейки для корабля при горизонтальном расположении
 function checkVertPath(x, y, ship, field) {
     let errors = 0;
     if ((y + ship.length) <= field.length && field[y][x] != 1) {
@@ -255,6 +255,7 @@ function checkVertPath(x, y, ship, field) {
 
 }
 
+// функция, проверяющая, свободны ли ячейки для корабля при вертикальном расположении
 function checkHorPath(x, y, ship, field) {
     let errors = 0;
     if ((x + ship.length) <= field[0].length && field[y][x] != 1) {
@@ -349,7 +350,7 @@ function checkHorPath(x, y, ship, field) {
 }
 
 
-
+// функция установки корабля на поле
 function fillField(ship, player) {
     let field;
     if (player == 'comp') {
@@ -444,6 +445,7 @@ function fillField(ship, player) {
 
 autoFillButton.addEventListener('click', autofill);
 
+// функция автоматической установки всех кораблей сразу
 function autofill(e) {
     let temp = 0;
     if (!e) {
@@ -474,9 +476,6 @@ function autofill(e) {
         fillField(ship2user, 'user');
         fillField(ship3user, 'user');
         fillField(ship4user, 'user');
-
-        // autoFillButton.classList.add("inactive");
-
     }
 
     /*
@@ -564,6 +563,7 @@ function mouseDown(e) {
     dragPoint = e.target;
 }
 
+// функция изменения расположения корабля пользователя с горизонтального на вертикальное и обратно
 function horVertChange(e) {
     e.preventDefault();
     let active;
@@ -614,6 +614,7 @@ function horVertChange(e) {
     }
 }
 
+// ряд функций drag, предназначенных для установки вручную кораблей пользователя на поле
 function dragStart(e) {
     shiplength = e.target.querySelectorAll("td").length;
     if (shiplength == 4) {
@@ -753,7 +754,7 @@ function drop(e) {
 
 let timer;
 
-
+// функция для запуска фоновой музыки
 function playMusic() {
     clearInterval(timer);
     if (readytoPlay == true) {

@@ -149,6 +149,11 @@ button {
     transition      : background-color 0.5s;
 }
 
+button:hover {
+    background-color: rgb(255, 236, 151);
+    transition      : background-color 0.5s;
+}
+
 #startButton {
     width: 210px;
 }
@@ -364,11 +369,6 @@ button:active {
     opacity    : 0.9;
 }
 
-.menu button:hover {
-    background-color: rgb(255, 236, 151);
-    transition      : background-color 0.5s;
-}
-
 .name {
     position           : absolute;
     width              : 800px;
@@ -408,4 +408,8 @@ button:active {
     height   : 60px;
     font-size: 25px;
 
+}
+
+input {
+    transform: scale(1.3);
 }
