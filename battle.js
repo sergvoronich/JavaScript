@@ -32,11 +32,11 @@ function startBattle() {
         if (toggle == 1 && shootAllowed) {
             currentField = field1;
             toggle = 2;
-            setTimeout(userShoot, 500);
+            userShoot();
         } else if (toggle == 2 && shootAllowed) {
             currentField = field2;
             toggle = 1;
-            setTimeout(compShoot, 500);
+            compShoot();
         }
     }
 
