@@ -1,4 +1,4 @@
-window.location.hash = "MENU";
+window.location.hash = "menu";
 setTimeout(() => {
     document.querySelector('.wrapper').style.display = "";
     document.querySelector('.navigation').style.display = "";
@@ -21,22 +21,22 @@ links[2].addEventListener('click', openpage3);
 
 function openpage1(e) {
     e.preventDefault()
-    window.location.hash = "MENU";
+    window.location.hash = "menu";
 }
 
 function openpage2(e) {
     e.preventDefault()
-    window.location.hash = "HISCORE";
+    window.location.hash = "hiscore";
 }
 
 function openpage3(e) {
     e.preventDefault()
-    window.location.hash = "RULES";
+    window.location.hash = "rules";
 }
 
 function openpage4(e) {
     e.preventDefault()
-    window.location.hash = "SETTINGS";
+    window.location.hash = "settings";
 }
 
 function openinitialpage(e) {
@@ -64,7 +64,7 @@ function updatePage() {
     var hash = location.hash.substr(1);
 
     switch (hash) {
-        case 'MENU':
+        case 'menu':
             $.ajax(hash + '.html', {
                 type: "GET",
                 dataType: "html",
@@ -72,7 +72,7 @@ function updatePage() {
             });
             setTimeout(mainMenu, 200);
             break;
-        case 'HISCORE':
+        case 'hiscore':
             $.ajax(hash + '.html', {
                 type: "GET",
                 dataType: "html",
@@ -80,7 +80,7 @@ function updatePage() {
             })
             setTimeout(childMenu, 200);
             break;
-        case 'RULES':
+        case 'rules':
             $.ajax(hash + '.html', {
                 type: "GET",
                 dataType: "html",
@@ -88,7 +88,7 @@ function updatePage() {
             })
             setTimeout(childMenu, 200);
             break;
-        case 'SETTINGS':
+        case 'settings':
             $.ajax(hash + '.html', {
                 type: "GET",
                 dataType: "html",
