@@ -374,7 +374,7 @@ button:active {
     width              : 800px;
     height             : 200px;
     z-index            : 5;
-    top                : 50px;
+    top                : 5vh;
     left               : 30%;
     background-image   : url('images/battleshiptext.png');
     background-position: 0 -150px;
