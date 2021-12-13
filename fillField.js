@@ -638,9 +638,7 @@ function dragover(e) {
 }
 
 function dragleave(e) {
-    if (e.target.tagName == "TD") {
-        // e.target.style.backgroundColor = "#ccc";
-    }
+    e.preventDefault();
 }
 
 function drop(e) {

@@ -325,35 +325,6 @@ function startBattleNotice() {
 
 }
 
-/*
-function compMoveNotice() {
-    const textContainer = document.createElement("span");
-    textContainer.textContent = "ХОД КОМПЬЮТЕРА";
-    textContainer.classList.add("comp-move-notice");
-    document.body.appendChild(textContainer);
-
-    setTimeout(removeNotice, 1000);
-
-    function removeNotice() {
-        textContainer.classList.add("inactive");
-    }
-
-}
-function userMoveNotice() {
-    const textContainer = document.createElement("span");
-    textContainer.textContent = "ВАШ ХОД";
-    textContainer.classList.add("user-move-notice");
-    document.body.appendChild(textContainer);
-
-    setTimeout(removeNotice, 500);
-
-    function removeNotice() {
-        textContainer.classList.add("inactive");
-    }
-
-}
-*/
-
 // функция, проверяющая, установлены ли все корабли на поле
 function shipsFilledCheck() {
     let errors = 0;
