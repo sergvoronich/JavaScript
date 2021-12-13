@@ -71,6 +71,18 @@ function changeSoundsRadio() {
     }
 }
 
+function soundsInit() {
+    if (sessionStorage.getItem("soundsIsOn") == "false") {
+        boom1.volume = 0;
+        boom2.volume = 0;
+        boom3.volume = 0;
+    } else {
+        boom1.volume = 1;
+        boom2.volume = 1;
+        boom3.volume = 1;
+    }
+}
+
 function changeLevel() {
     const option1 = document.getElementById("level-1");
     const option2 = document.getElementById("level-2");
@@ -89,3 +101,4 @@ function changeLevel() {
 
 
 window.addEventListener('hashchange', setRadioButtons);
+soundsInit();

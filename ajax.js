@@ -2,13 +2,13 @@ window.location.hash = "menu";
 setTimeout(() => {
     document.querySelector('.wrapper').style.display = "";
     document.querySelector('.navigation').style.display = "";
-}, 200);
+    document.querySelector('.info').style.display = "";
+}, 500);
 
 
 var links = document.getElementsByTagName('a');
 links[0].addEventListener('click', openpage1);
-links[1].addEventListener('click', openpage2);
-links[2].addEventListener('click', openpage3);
+
 
 
 //setTimeout(() => {
@@ -44,10 +44,6 @@ function openinitialpage(e) {
     window.location.hash = "";
 }
 
-
-function renderMenu(data) {
-    document.body.innerHTML = data;
-}
 
 
 function renderNewPage(data) {

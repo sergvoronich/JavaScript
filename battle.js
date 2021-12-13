@@ -9,11 +9,15 @@ let currentHitCell = [];
 let shootAllowed = false;
 let musicIsOn = true;
 let soundsIsOn = true;
+let movesCounter = 0;
+let compShipsLeft = 10;
+let userShipsLeft = 10;
+let gameIsOn = false;
 
 // функция начала битвы
 function startBattle() {
     console.log('Battle started!');
-
+    gameIsOn = true;
     startBattleNotice();
 
     for (let i = 0; i < allships.length; i++) {
@@ -29,6 +33,13 @@ function startBattle() {
     let toggle = 2;
     shipsAdjacentAreaCapture();
     userShoot();
+
+    // функция для отображения числа ходов
+    function movesCountDisplay() {
+        movesCounter++;
+        const movesSpan = document.getElementById("moves-count");
+        movesSpan.textContent = `${movesCounter}`;
+    }
 
     // функция переключения хода между пользователем и компьютером
     function switchPlayer() {
@@ -56,12 +67,11 @@ function startBattle() {
                 let id = e.target.getAttribute("id");
                 let indexes = id.substr(0, 2);
                 let hitString = indexes.split('');
-
                 let y = parseInt(hitString[0]);
                 let x = parseInt(hitString[1]);
 
-
                 if (currentField[y][x] != 2 && currentField[y][x] != 3 && letUserShoot) {
+                    movesCountDisplay();
                     letUserShoot = false;
                     let hit = [y, x];
                     setTimeout(switchPlayer, 1500);
@@ -290,6 +300,7 @@ function killedCheck(hit, ships) {
         }
     }
     endGameCheck();
+    shipsLeftDisplay();
 }
 
 // функция окрашивания полей убитого корабля
@@ -313,7 +324,7 @@ function paintKilledShip(ship, ships) {
 // функция выведения сообщения о начале битвы
 function startBattleNotice() {
     const textContainer = document.createElement("span");
-    textContainer.textContent = "Битва началась!";
+    textContainer.textContent = "BATTLE STARTED!";
     textContainer.classList.add("start-battle-notice");
     document.body.appendChild(textContainer);
 
@@ -412,6 +423,9 @@ function endGameCheck() {
         }
     }
 
+    compShipsLeft = liveCompShips;
+    userShipsLeft = liveUserShips;
+
     if (liveCompShips === 0) endGame("user");
     if (liveUserShips === 0) endGame("comp");
 
@@ -419,6 +433,7 @@ function endGameCheck() {
 
 // функция, срабатывающая, когда игра закончилась
 function endGame(winner) {
+    gameIsOn = false;
     music1.currentTime = 0;
     music1.pause();
     music2.play();
@@ -521,8 +536,8 @@ function reset() {
     };
 
     shipsReset();
-
     autofill();
+    shipsLeftDisplay();
 
 }
 
@@ -651,24 +666,19 @@ function shootAnim() {
     }
 }
 
-// функция включения/выключения звука
-function mute() {
-    if (musicIsOn) {
-        music1.volume = 0;
-        musicIsOn = false;
-        sessionStorage.setItem("musicIsOn", "false");
-    } else {
-        music1.volume = 0.3;
-        musicIsOn = true;
-        sessionStorage.setItem("musicIsOn", "true");
-    }
+
+function shipsLeftDisplay() {
+    const compShipsSpan = document.getElementById('comp-ships-left');
+    const userShipsSpan = document.getElementById('user-ships-left');
+    compShipsSpan.textContent = `${compShipsLeft}`;
+    userShipsSpan.textContent = `${userShipsLeft}`;
 }
 
-const settings = {
-    level: 2,
-    adjacentAreaFill: true,
-    musicIsOn: true,
-    soundsIsOn: true
+
+function changeMenuButtons() {
+    if (gameIsOn) {
+
+    }
 }
 
 //endGame("user");
@@ -682,11 +692,7 @@ document.addEventListener('shipsfilled', shipsFilledCheck);
 
 const startButton = document.getElementById("startButton");
 startButton.addEventListener('click', readyToBattleCheck);
-
-const muteButton = document.querySelector(".mute-button");
-muteButton.addEventListener('click', mute);
-
-
+resetButton.addEventListener('click', reset);
 
 /*
 

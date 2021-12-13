@@ -120,12 +120,14 @@ button:hover {
 .ships {
     margin-left : 50px;
     margin-right: auto;
-    width       : 300px;
+    max-width   : 300px;
+    min-width   : 250px;
 }
 
 .ships table {
-    border      : 0;
-    border-color: none;
+    border          : 0;
+    border-color    : none;
+    background-color: rgba(0, 0, 0, 0);
 }
 
 .ships td {
@@ -169,25 +171,9 @@ button:active {
 
 .start-battle-notice {
     position   : absolute;
-    left       : 400px;
+    left       : 300px;
     top        : 300px;
     font-size  : 80px;
-    font-weight: bold;
-}
-
-.user-move-notice {
-    position   : absolute;
-    left       : 350px;
-    top        : 30px;
-    font-size  : 20px;
-    font-weight: bold;
-}
-
-.comp-move-notice {
-    position   : absolute;
-    left       : 900px;
-    top        : 30px;
-    font-size  : 20px;
     font-weight: bold;
 }
 
@@ -302,18 +288,68 @@ button:active {
 }
 
 .navigation {
-    display: flex;
+    display        : flex;
+    box-sizing     : border-box;
+    width          : 1113px;
+    justify-content: flex-start;
+}
+
+.navigation * {
+    align-self      : center;
+    text-decoration : none;
+    color           : white;
+    font-family     : Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    font-size       : 20px;
+    border          : 2px solid white;
+    border-radius   : 5px;
+    padding         : 5px;
+    background-color: rgba(255, 255, 255, 0);
+}
+
+.navigation a {
+    text-decoration: none;
+    color          : white;
+    font-family    : Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    font-size      : 20px;
+    border         : 2px solid white;
+    border-radius  : 5px;
+    padding        : 5px;
+    transition     : border 0.5s, color 0.5s, background-color 0.5s;
+}
+
+.navigation a:hover {
+    border          : 2px solid black;
+    color           : black;
+    background-color: white;
+    transition      : border 0.5s, color 0.5s, background-color 0.5s;
+}
+
+.info {
+    display        : flex;
+    width          : 1113px;
+    color          : white;
+    font-size      : 20px;
+    justify-content: space-between;
+    font-family    : Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+}
+
+.info * {
+    margin     : 20px 0 0 0;
+    align-items: flex-end;
 }
 
 .mute-button {
-    width              : 50px;
+    /*width              : 50px;
     height             : 50px;
     padding            : 5px;
     background-image   : url('images/mute-button.png');
     background-position: center;
     background-size    : 30px;
-    background-repeat  : no-repeat;
-    background-color   : white;
+    background-repeat  : no-repeat;*/
+}
+
+.mute-button:hover {
+    background-color: white;
 }
 
 .menu {
