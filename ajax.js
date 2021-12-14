@@ -1,22 +1,14 @@
 window.location.hash = "menu";
-setTimeout(() => {
-    document.querySelector('.wrapper').style.display = "";
-    document.querySelector('.navigation').style.display = "";
-    document.querySelector('.info').style.display = "";
-}, 500);
 
+
+$.ajax('menu.html', {
+    type: "GET",
+    dataType: "html",
+    success: renderInitialMenu
+});
 
 var links = document.getElementsByTagName('a');
 links[0].addEventListener('click', openpage1);
-
-
-
-//setTimeout(() => {
-//  const script = document.createElement('script');
-// cript.src = "main-menu-buttons.js";
-//document.body.appendChild(script);
-//}, 1000);
-
 
 
 function openpage1(e) {
@@ -44,11 +36,32 @@ function openinitialpage(e) {
     window.location.hash = "";
 }
 
-
+function renderSettingsPage(data) {
+    var container = document.getElementById('new-pages-container');
+    container.innerHTML = data;
+    childMenu();
+    setSettings();
+}
 
 function renderNewPage(data) {
     var container = document.getElementById('new-pages-container');
     container.innerHTML = data;
+    childMenu();
+}
+
+function renderMenu(data) {
+    var container = document.getElementById('new-pages-container');
+    container.innerHTML = data;
+    mainMenu();
+}
+
+function renderInitialMenu(data) {
+    var container = document.getElementById('new-pages-container');
+    container.innerHTML = data;
+    mainMenu();
+    document.querySelector('.wrapper').style.display = "";
+    document.querySelector('.navigation').style.display = "";
+    document.querySelector('.info').style.display = "";
 }
 
 function renderInitialPage() {
@@ -64,9 +77,8 @@ function updatePage() {
             $.ajax(hash + '.html', {
                 type: "GET",
                 dataType: "html",
-                success: renderNewPage
+                success: renderMenu
             });
-            setTimeout(mainMenu, 500);
             break;
         case 'hiscore':
             $.ajax(hash + '.html', {
@@ -74,7 +86,6 @@ function updatePage() {
                 dataType: "html",
                 success: renderNewPage
             })
-            setTimeout(childMenu, 500);
             break;
         case 'rules':
             $.ajax(hash + '.html', {
@@ -82,15 +93,13 @@ function updatePage() {
                 dataType: "html",
                 success: renderNewPage
             })
-            setTimeout(childMenu, 500);
             break;
         case 'settings':
             $.ajax(hash + '.html', {
                 type: "GET",
                 dataType: "html",
-                success: renderNewPage
+                success: renderSettingsPage
             })
-            setTimeout(childMenu, 500);
             break;
         case '':
             $.ajax('index.html', {
@@ -112,6 +121,14 @@ function mainMenu() {
     rules.addEventListener('click', openpage3);
     settings.addEventListener('click', openpage4);
     hiscore.addEventListener('click', openpage2);
+    if (gameIsOn) {
+        const newGameButton = document.querySelector('.new-game')
+        newGameButton.style.display = "";
+        play.textContent = "RESUME GAME";
+        document.getElementById("startButton");
+        newGameButton.addEventListener('click', reset);
+        newGameButton.addEventListener('click', openinitialpage);
+    }
 }
 
 function childMenu() {
@@ -120,8 +137,5 @@ function childMenu() {
 }
 
 
-
-
 window.onhashchange = updatePage;
-window.addEventListener('DOMContentLoaded', updatePage);
 

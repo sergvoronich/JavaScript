@@ -9,10 +9,13 @@ let currentHitCell = [];
 let shootAllowed = false;
 let musicIsOn = true;
 let soundsIsOn = true;
-let movesCounter = 0;
+let movesCounter = 1;
 let compShipsLeft = 10;
 let userShipsLeft = 10;
 let gameIsOn = false;
+let currentField;
+let toggle = 2;
+sessionStorage.setItem("areaAutoFill", "true");
 
 // функция начала битвы
 function startBattle() {
@@ -20,132 +23,192 @@ function startBattle() {
     gameIsOn = true;
     startBattleNotice();
 
-    for (let i = 0; i < allships.length; i++) {
-        console.log(allships[i]);
-    }
-
+    //for (let i = 0; i < allships.length; i++) {
+    //console.log(allships[i]);
+    //}
 
     shootAllowed = true;
-    let currentField = field1;
-    let shotCompShip = [];
-    let shotUserShip = [];
-    let shipLengthCounter = 0;
-    let toggle = 2;
+    currentField = field1;
+    //let shotCompShip = [];
+    //let shotUserShip = [];
+    //let shipLengthCounter = 0;
+
     shipsAdjacentAreaCapture();
     userShoot();
+}
 
-    // функция для отображения числа ходов
-    function movesCountDisplay() {
-        movesCounter++;
-        const movesSpan = document.getElementById("moves-count");
-        movesSpan.textContent = `${movesCounter}`;
+// функция переключения хода между пользователем и компьютером
+function switchPlayer() {
+    if (toggle == 1 && shootAllowed) {
+        currentField = field1;
+        toggle = 2;
+        setTimeout(userShoot, 500);
+    } else if (toggle == 2 && shootAllowed) {
+        currentField = field2;
+        toggle = 1;
+        setTimeout(compShoot, 500);
     }
+}
 
-    // функция переключения хода между пользователем и компьютером
-    function switchPlayer() {
-        if (toggle == 1 && shootAllowed) {
-            currentField = field1;
-            toggle = 2;
-            setTimeout(userShoot, 500);
-        } else if (toggle == 2 && shootAllowed) {
-            currentField = field2;
-            toggle = 1;
-            setTimeout(compShoot, 500);
-        }
-    }
+// функция для отображения числа ходов
+function movesCountDisplay() {
+    const movesSpan = document.getElementById("moves-count");
+    movesSpan.textContent = `${movesCounter}`;
+    movesCounter++;
+}
 
-    // функция выстрела пользователя
-    function userShoot() {
-        let letUserShoot = true;
+// функция установки слушателей выстрела пользователя на поле компьютера
+let letUserShoot = true;
+function userShoot() {
+    if (shootAllowed) {
+        letUserShoot = true;
         userfield.classList.remove("red-border");
         enemyfield.classList.add("red-border");
         enemyfield.addEventListener('click', userShootCapture);
         enemyfield.classList.add("user-shoot");
+    }
+}
 
-        function userShootCapture(e) {
-            if (e.target.tagName == "TD") {
-                let id = e.target.getAttribute("id");
-                let indexes = id.substr(0, 2);
-                let hitString = indexes.split('');
-                let y = parseInt(hitString[0]);
-                let x = parseInt(hitString[1]);
+// функция выстрела пользователя
+function userShootCapture(e) {
+    if (e.target.tagName == "TD") {
+        let id = e.target.getAttribute("id");
+        let indexes = id.substr(0, 2);
+        let hitString = indexes.split('');
+        let y = parseInt(hitString[0]);
+        let x = parseInt(hitString[1]);
 
-                if (currentField[y][x] != 2 && currentField[y][x] != 3 && letUserShoot) {
-                    movesCountDisplay();
-                    letUserShoot = false;
-                    let hit = [y, x];
-                    setTimeout(switchPlayer, 1500);
-                    const elem = document.getElementById(`${id}`);
-                    let top = `${y * 53}px`;
-                    let left = `${x * 53}px`;
-                    createExplosion(top, left, elem);
-                    shootAnim();
+        if (currentField[y][x] != 2 && currentField[y][x] != 3 && letUserShoot) {
+            movesCountDisplay();
+            letUserShoot = false;
+            let hit = [y, x];
+            setTimeout(switchPlayer, 1500);
+            const elem = document.getElementById(`${id}`);
+            let top = `${y * 53}px`;
+            let left = `${x * 53}px`;
+            createExplosion(top, left, elem);
+            shootAnim();
 
-                    if (currentField[y][x] == 0) {
-                        currentField[y][x] = 2;
-                        setTimeout(() => { e.target.textContent = "o"; }, 1000);
-                        // e.target.style.backgroundColor = "rgb(15, 140, 243)";
-                        console.log(hit);
-                        enemyfield.removeEventListener('click', userShootCapture);
-                    } else if (currentField[y][x] == 1) {
-                        currentField[y][x] = 3;
-                        // вставка огня
-                        top = `${y * 53}px`;
-                        left = `${x * 53 + 14}px`;
-                        setTimeout(() => {
-                            e.target.style.backgroundColor = `${woundedColor}`;
-                            createFire(top, left, elem);
-                            killedCheck(hit, compships);
-                        }, 1000);
-                        enemyfield.removeEventListener('click', userShootCapture);
-                    }
-                }
+            if (currentField[y][x] == 0) {
+                currentField[y][x] = 2;
+                setTimeout(() => { e.target.textContent = "o"; }, 1000);
+                // e.target.style.backgroundColor = "rgb(15, 140, 243)";
+                console.log(hit);
+                enemyfield.removeEventListener('click', userShootCapture);
+            } else if (currentField[y][x] == 1) {
+                currentField[y][x] = 3;
+                // вставка огня
+                top = `${y * 53}px`;
+                left = `${x * 53 + 14}px`;
+                setTimeout(() => {
+                    e.target.style.backgroundColor = `${woundedColor}`;
+                    createFire(top, left, elem);
+                    killedCheck(hit, compships);
+                }, 1000);
+                enemyfield.removeEventListener('click', userShootCapture);
             }
         }
     }
+}
 
+// функция выстрела компьютера (учитывает различные уровни сложности)
+function compShoot() {
+    enemyfield.classList.remove("red-border");
+    userfield.classList.add("red-border");
+    //compMoveNotice();
+    //setTimeout(userMoveNotice, 1500);
+    setTimeout(switchPlayer, 2000);
 
-    // функция выстрела компьютера (учитывает различные уровни сложности)
-    function compShoot() {
-        enemyfield.classList.remove("red-border");
-        userfield.classList.add("red-border");
-        //compMoveNotice();
-        //setTimeout(userMoveNotice, 1500);
-        setTimeout(switchPlayer, 2000);
+    let counter = 0;
 
-        let counter = 0;
+    if (woundedShipDetected && level == 2) {
+        shootIfWounded();
+    } else {
+        shoot();
+    }
 
-        if (woundedShipDetected && level == 2) {
-            shootIfWounded();
-        } else {
+    enemyfield.classList.remove("user-shoot");
+
+    function shoot() {
+        let x = Math.floor(Math.random() * 10);
+        let y = Math.floor(Math.random() * 10);
+        let hit = [y, x];
+        const cell = document.getElementById(`${y}${x}`);
+        if (field2[y][x] == 0) {
+            field2[y][x] = 2;
+            let top = `${y * 53}px`;
+            let left = `${x * 53}px`;
+            setTimeout(() => {
+                createExplosion(top, left, cell);
+                shootAnim();
+            }, 500);
+            //cell.textContent = "o";
+            setTimeout(() => { cell.textContent = "o"; }, 1500);
+        } else if (field2[y][x] == 1) {
+            firstHitCell = [];
+            currentHitCell = [];
+            firstHitCell.push(y);
+            firstHitCell.push(x);
+            currentHitCell.push(y);
+            currentHitCell.push(x);
+            woundedShipDetected = true;
+            field2[y][x] = 3;
+            let top = `${y * 53}px`;
+            let left = `${x * 53}px`;
+            setTimeout(() => {
+                createExplosion(top, left, cell);
+                shootAnim();
+            }, 500);
+            setTimeout(() => {
+                cell.style.backgroundColor = `${woundedColor}`;
+                top = `${y * 53}px`;
+                left = `${x * 53 + 14}px`;
+                createFire(top, left, cell);
+                killedCheck(hit, userships);
+            }, 1500)
+        } else if (field2[y][x] == 2 || field2[y][x] == 3) {
             shoot();
         }
+    }
 
-        enemyfield.classList.remove("user-shoot");
+    function shootIfWounded() {
+        let number = Math.floor(Math.random() * 4);
+        let x, y;
 
-        function shoot() {
-            let x = Math.floor(Math.random() * 10);
-            let y = Math.floor(Math.random() * 10);
+        if (number == 0) {
+            x = currentHitCell[1] - 1;
+            y = currentHitCell[0];
+        } else if (number == 1) {
+            x = currentHitCell[1] + 1;
+            y = currentHitCell[0];
+        } else if (number == 2) {
+            x = currentHitCell[1];
+            y = currentHitCell[0] - 1;
+        } else if (number == 3) {
+            x = currentHitCell[1];
+            y = currentHitCell[0] + 1;
+        }
+
+        if (x > 9 || y > 9 || x < 0 || y < 0) {
+            shootIfWounded();
+        } else {
             let hit = [y, x];
+            console.log(currentHitCell);
+            console.log(hit);
             const cell = document.getElementById(`${y}${x}`);
             if (field2[y][x] == 0) {
                 field2[y][x] = 2;
+                //cell.textContent = "o";
                 let top = `${y * 53}px`;
                 let left = `${x * 53}px`;
                 setTimeout(() => {
                     createExplosion(top, left, cell);
                     shootAnim();
                 }, 500);
-                //cell.textContent = "o";
                 setTimeout(() => { cell.textContent = "o"; }, 1500);
+                counter = 0;
             } else if (field2[y][x] == 1) {
-                firstHitCell = [];
-                currentHitCell = [];
-                firstHitCell.push(y);
-                firstHitCell.push(x);
-                currentHitCell.push(y);
-                currentHitCell.push(x);
-                woundedShipDetected = true;
+                currentHitCell = [y, x];
                 field2[y][x] = 3;
                 let top = `${y * 53}px`;
                 let left = `${x * 53}px`;
@@ -160,71 +223,13 @@ function startBattle() {
                     createFire(top, left, cell);
                     killedCheck(hit, userships);
                 }, 1500)
+                counter = 0;
             } else if (field2[y][x] == 2 || field2[y][x] == 3) {
-                shoot();
-            }
-        }
-
-        function shootIfWounded() {
-            let number = Math.floor(Math.random() * 4);
-            let x, y;
-
-            if (number == 0) {
-                x = currentHitCell[1] - 1;
-                y = currentHitCell[0];
-            } else if (number == 1) {
-                x = currentHitCell[1] + 1;
-                y = currentHitCell[0];
-            } else if (number == 2) {
-                x = currentHitCell[1];
-                y = currentHitCell[0] - 1;
-            } else if (number == 3) {
-                x = currentHitCell[1];
-                y = currentHitCell[0] + 1;
-            }
-
-            if (x > 9 || y > 9 || x < 0 || y < 0) {
-                shootIfWounded();
-            } else {
-                let hit = [y, x];
-                console.log(currentHitCell);
-                console.log(hit);
-                const cell = document.getElementById(`${y}${x}`);
-                if (field2[y][x] == 0) {
-                    field2[y][x] = 2;
-                    //cell.textContent = "o";
-                    let top = `${y * 53}px`;
-                    let left = `${x * 53}px`;
-                    setTimeout(() => {
-                        createExplosion(top, left, cell);
-                        shootAnim();
-                    }, 500);
-                    setTimeout(() => { cell.textContent = "o"; }, 1500);
-                    counter = 0;
-                } else if (field2[y][x] == 1) {
-                    currentHitCell = [y, x];
-                    field2[y][x] = 3;
-                    let top = `${y * 53}px`;
-                    let left = `${x * 53}px`;
-                    setTimeout(() => {
-                        createExplosion(top, left, cell);
-                        shootAnim();
-                    }, 500);
-                    setTimeout(() => {
-                        cell.style.backgroundColor = `${woundedColor}`;
-                        top = `${y * 53}px`;
-                        left = `${x * 53 + 14}px`;
-                        createFire(top, left, cell);
-                        killedCheck(hit, userships);
-                    }, 1500)
-                    counter = 0;
-                } else if (field2[y][x] == 2 || field2[y][x] == 3) {
-                    counter++;
-                    if (counter > 64) {
-                        currentHitCell = firstHitCell;
-                    }
-                    shootIfWounded();
+                counter++;
+                if (counter > 64) {
+                    currentHitCell = firstHitCell;
                 }
+                shootIfWounded();
             }
         }
     }
@@ -247,13 +252,15 @@ function killedCheck(hit, ships) {
                 let x = ship[0][1];
                 let y = ship[0][0];
                 if (ships.includes(ship1comp)) {
-                    for (let i = 0; i < shipAdjacentArea.length; i++) {
-                        const a = shipAdjacentArea[i][0];
-                        const b = shipAdjacentArea[i][1];
-                        if (field1[a][b] == 0) {
-                            field1[a][b] = 2;
-                            const cell = document.getElementById(`${a}${b}comp`);
-                            cell.textContent = "o";
+                    if (sessionStorage.getItem("areaAutoFill") == "true") {
+                        for (let i = 0; i < shipAdjacentArea.length; i++) {
+                            const a = shipAdjacentArea[i][0];
+                            const b = shipAdjacentArea[i][1];
+                            if (field1[a][b] == 0) {
+                                field1[a][b] = 2;
+                                const cell = document.getElementById(`${a}${b}comp`);
+                                cell.textContent = "o";
+                            }
                         }
                     }
 
@@ -284,13 +291,15 @@ function killedCheck(hit, ships) {
                     }
                     paintKilledShip(ship, ships);
                 } else {
-                    for (let i = 0; i < shipAdjacentArea.length; i++) {
-                        const a = shipAdjacentArea[i][0];
-                        const b = shipAdjacentArea[i][1];
-                        if (field2[a][b] == 0) {
-                            field2[a][b] = 2;
-                            const cell = document.getElementById(`${a}${b}`);
-                            cell.textContent = "o";
+                    if (sessionStorage.getItem("areaAutoFill") == "true") {
+                        for (let i = 0; i < shipAdjacentArea.length; i++) {
+                            const a = shipAdjacentArea[i][0];
+                            const b = shipAdjacentArea[i][1];
+                            if (field2[a][b] == 0) {
+                                field2[a][b] = 2;
+                                const cell = document.getElementById(`${a}${b}`);
+                                cell.textContent = "o";
+                            }
                         }
                     }
                     woundedShipDetected = false;
@@ -318,8 +327,6 @@ function paintKilledShip(ship, ships) {
 
     }
 }
-
-
 
 // функция выведения сообщения о начале битвы
 function startBattleNotice() {
@@ -535,6 +542,14 @@ function reset() {
         table2cells[i].textContent = "";
     };
 
+    enemyfield.classList.remove("user-shoot");
+    enemyfield.removeEventListener('click', userShootCapture);
+    gameIsOn = false;
+    shootAllowed = false;
+    compShipsLeft = 10;
+    userShipsLeft = 10;
+    movesCounter = 0;
+    movesCountDisplay();
     shipsReset();
     autofill();
     shipsLeftDisplay();
@@ -566,8 +581,6 @@ function shipsReset() {
     resetButton.classList.remove("inactive");
     startButton.classList.remove("inactive");
     autoFillButton.classList.remove("inactive");
-    console.log(ship1comp);
-    console.log(ship3user);
     ship1.classList.remove("inactive");
     ship2.classList.remove("inactive");
     ship3.classList.remove("inactive");
@@ -674,12 +687,6 @@ function shipsLeftDisplay() {
     userShipsSpan.textContent = `${userShipsLeft}`;
 }
 
-
-function changeMenuButtons() {
-    if (gameIsOn) {
-
-    }
-}
 
 //endGame("user");
 //endGame("comp");

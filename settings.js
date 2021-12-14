@@ -1,39 +1,61 @@
-// функция для инициализации и установки слушателей на радиокнопки
-function setRadioButtons() {
-    var hash = location.hash.substr(1);
-    if (hash == "settings") {
-        setTimeout(() => {
-            const musicRadioButton = document.querySelector(".music input");
-            const musicRadioButton2 = document.querySelector(".music input:last-child");
-            if (sessionStorage.getItem("musicIsOn") == "false") {
-                musicRadioButton2.setAttribute("checked", "");
-            } else {
-                musicRadioButton.setAttribute("checked", "");
-            }
-            const soundsRadioButton = document.querySelector(".sounds input");
-            const soundsRadioButton2 = document.querySelector(".sounds input:last-child");
-            if (sessionStorage.getItem("soundsIsOn") == "false") {
-                soundsRadioButton2.setAttribute("checked", "");
-            } else {
-                soundsRadioButton.setAttribute("checked", "");
-            }
-            const option1 = document.getElementById("level-1");
-            const option2 = document.getElementById("level-2");
-            const option3 = document.getElementById("level-3");
-            if (sessionStorage.getItem("level") == "1") {
-                option1.setAttribute("selected", "");
-            } else if (sessionStorage.getItem("level") == "3") {
-                option3.setAttribute("selected", "");
-            } else {
-                option2.setAttribute("selected", "");
-            }
-            const levelBlock = document.getElementById("level");
-            const musicBlock = document.querySelector(".music");
-            const soundsBlock = document.querySelector(".sounds");
-            levelBlock.addEventListener('click', changeLevel);
-            musicBlock.addEventListener('click', changeMusicRadio);
-            soundsBlock.addEventListener('click', changeSoundsRadio)
-        }, 500);
+// функция для инициализации и установки слушателей на радиокнопки и выпадающий список
+function setSettings() {
+    const musicRadioButton = document.querySelector(".music input");
+    const musicRadioButton2 = document.querySelector(".music input:last-child");
+    if (sessionStorage.getItem("musicIsOn") == "false") {
+        musicRadioButton2.setAttribute("checked", "");
+    } else {
+        musicRadioButton.setAttribute("checked", "");
+    }
+
+    const soundsRadioButton = document.querySelector(".sounds input");
+    const soundsRadioButton2 = document.querySelector(".sounds input:last-child");
+    if (sessionStorage.getItem("soundsIsOn") == "false") {
+        soundsRadioButton2.setAttribute("checked", "");
+    } else {
+        soundsRadioButton.setAttribute("checked", "");
+    }
+
+    const option1 = document.getElementById("level-1");
+    const option2 = document.getElementById("level-2");
+    const option3 = document.getElementById("level-3");
+    if (sessionStorage.getItem("level") == "1") {
+        option1.setAttribute("selected", "");
+    } else if (sessionStorage.getItem("level") == "3") {
+        option3.setAttribute("selected", "");
+    } else {
+        option2.setAttribute("selected", "");
+    }
+
+    const levelBlock = document.getElementById("level");
+    const musicBlock = document.querySelector(".music");
+    const soundsBlock = document.querySelector(".sounds");
+    const shadow = document.querySelector('.shadow');
+    if (gameIsOn == false) {
+        shadow.classList.add('inactive');
+        levelBlock.addEventListener('click', changeLevel);
+    } else {
+        shadow.classList.remove('inactive');
+    }
+    musicBlock.addEventListener('click', changeMusicRadio);
+    soundsBlock.addEventListener('click', changeSoundsRadio);
+
+    const checkbox = document.getElementById('area');
+    if (sessionStorage.getItem("areaAutoFill") == "true") {
+        checkbox.setAttribute("checked", "");
+    } else {
+        checkbox.removeAttribute("checked");
+    }
+    checkbox.addEventListener('click', changeAreaAutoFillSetting);
+}
+
+// функция изменения настройки автоматического заполнения полей вокруг убитого корабля
+function changeAreaAutoFillSetting() {
+    const checkbox = document.getElementById('area');
+    if (checkbox.checked) {
+        sessionStorage.setItem("areaAutoFill", "true");
+    } else {
+        sessionStorage.setItem("areaAutoFill", "false");
     }
 }
 
@@ -100,5 +122,4 @@ function changeLevel() {
 }
 
 
-window.addEventListener('hashchange', setRadioButtons);
 soundsInit();
